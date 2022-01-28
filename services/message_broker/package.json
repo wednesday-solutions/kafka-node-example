@@ -1,0 +1,9 @@
+{
+    "name": "message-broker",
+    "version": "0.0.1",
+    "license": "ISC",
+    "scripts": {
+        "dev": "docker-compose up -d",
+        "compose:down": "docker-compose down --remove-orphans"
+    }
+}

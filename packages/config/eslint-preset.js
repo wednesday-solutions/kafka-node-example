@@ -1,16 +1,28 @@
 module.exports = {
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended'
-  ],
-  env: {
-    node: true,
-    mocha: true,
-    es6: true
-  },
-  plugins: ['@typescript-eslint', 'prettier'],
-  parserOptions: {
-    parser: '@typescript-eslint/parser'
-  }
-}
+    extends: ["alloy", "alloy/typescript", "alloy/react", "plugin:unicorn/recommended"],
+    ignorePatterns: ["**/migrations/*.ts", "dist/*"],
+    env: {
+        // Your environments (which contains several predefined global variables)
+        browser: true,
+        node: true,
+        // mocha: true,
+        jest: true,
+    },
+    globals: {
+        // Your global variables (setting to false means it's not allowed to be reassigned)
+        //
+        // myGlobal: false
+    },
+    rules: {
+        // Customize your rules
+    },
+    overrides: [
+        {
+            files: ["*.resolver.ts"],
+            rules: {
+                "max-params": 0,
+            },
+        },
+    ],
+    plugins: ["prettier"],
+};

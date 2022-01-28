@@ -1,50 +1,80 @@
 {
-  "name": "api",
-  "version": "0.0.0",
-  "description": "API",
-  "main": "index.js",
-  "author": "Alexander Zeitler <alexander.zeitler@pdmlab.com>",
-  "license": "MIT",
-  "private": true,
-  "dependencies": {
-    "body-parser": "^1.19.1",
-    "convict": "^6.2.1",
-    "cors": "^2.8.5",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.2",
-    "http-graceful-shutdown": "^3.1.5",
-    "mongodb": "^4.3.0",
-    "pino-http": "^6.5.0",
-    "serialize-error": "8.1.0"
-  },
-  "devDependencies": {
-    "@types/body-parser": "^1.19.2",
-    "@types/convict": "^6.1.1",
-    "@types/cors": "^2.8.12",
-    "@types/dotenv": "^8.2.0",
-    "@types/express": "^4.17.13",
-    "@types/express-list-endpoints": "^6.0.0",
-    "@types/express-unless": "^0.5.2",
-    "@types/express-validator": "^3.0.0",
-    "@types/helmet": "^4.0.0",
-    "@types/http-graceful-shutdown": "^2.3.0",
-    "@types/mongodb": "^4.0.7",
-    "@types/node": "^17.0.8",
-    "@types/p-retry": "^3.0.1",
-    "@types/pino-http": "^5.8.1",
-    "@types/serialize-error": "^4.0.1",
-    "@types/tsc-watch": "^4.2.0",
-    "@types/validator": "^13.7.1",
-    "@types/wait-on": "^5.3.1",
-    "config": "*",
-    "eslint": "^8.6.0",
-    "ts-node": "^10.4.0",
-    "tsc-watch": "^4.6.0",
-    "tsconfig": "*",
-    "typescript": "^4.5.4"
-  },
-  "scripts": {
-    "start": "node --inspect=0.0.0.0:9229 --preserve-symlinks -r ts-node/register src/Server.ts | pino-pretty",
-    "dev": "tsc-watch --onSuccess 'yarn start'"
-  }
+    "name": "api",
+    "version": "0.0.0",
+    "description": "API",
+    "main": "dist/index.js",
+    "author": "Tousif",
+    "license": "MIT",
+    "private": true,
+    "scripts": {
+        "dev": "yarn compose:up && env-cmd -f ./.env.dev nodemon",
+        "build": "tsc && tsc-alias",
+        "gen-migrations": "env-cmd -f ./.env.dev mikro-orm migration:create",
+        "compose:up": "docker-compose --env-file ./.env.dev up -d",
+        "compose:down": "docker-compose --env-file ./.env.dev down --remove-orphans"
+    },
+    "dependencies": {
+        "@gquittet/graceful-server": "^2.5.2",
+        "@jenyus-org/graphql-utils": "^1.5.0",
+        "@mikro-orm/cli": "^4.5.9",
+        "@mikro-orm/core": "^4.5.9",
+        "@mikro-orm/postgresql": "^4.5.9",
+        "class-validator": "^0.13.2",
+        "env-cmd": "^10.1.0",
+        "envalid": "^7.2.2",
+        "fastify": "^3.24.0",
+        "fastify-plugin": "^3.0.0",
+        "fastify-print-routes": "^1.0.2",
+        "gen-env-types": "^1.3.0",
+        "hyperid": "^3.0.0",
+        "mercurius": "^8.9.1",
+        "mercurius-upload": "^2.0.0",
+        "reflect-metadata": "^0.1.13",
+        "tsconfig-paths": "^3.12.0",
+        "type-graphql": "^1.1.1"
+    },
+    "devDependencies": {
+        "@mgcrea/pino-pretty-compact": "^0.5.0",
+        "@types/connect": "^3.4.35",
+        "@types/faker": "^5.5.9",
+        "@types/jest": "^27.0.3",
+        "@types/node": "^16.11.9",
+        "@types/supertest": "^2.0.11",
+        "@typescript-eslint/eslint-plugin": "^5.4.0",
+        "@typescript-eslint/parser": "^5.4.0",
+        "config": "*",
+        "eslint": "^8.2.0",
+        "eslint-config-alloy": "^4.4.0",
+        "pino-pretty": "^7.3.0",
+        "supertest": "^6.1.6",
+        "ts-eager": "^2.0.2",
+        "ts-node": "^10.4.0",
+        "tsc-alias": "^1.4.1",
+        "tsc-watch": "^4.6.0",
+        "tsconfig": "*",
+        "typescript": "^4.5.4"
+    },
+    "mikro-orm": {
+        "useTsNode": true,
+        "configPaths": [
+            "./src/orm.config.ts"
+        ]
+    },
+    "engines": {
+        "node": ">=14.0.0"
+    },
+    "nodemonConfig": {
+        "env": {
+            "NODE_ENV": "development"
+        },
+        "watch": [
+            "src"
+        ],
+        "ignore": [
+            "src/**/*.test.ts"
+        ],
+        "ext": "ts,mjs,js,json,graphql",
+        "exec": "node -r ts-eager/register ./src/index.ts",
+        "legacyWatch": true
+    }
 }
