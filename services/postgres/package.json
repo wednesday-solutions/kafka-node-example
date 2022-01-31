@@ -1,0 +1,9 @@
+{
+    "name": "postgres_db",
+    "version": "0.0.1",
+    "license": "ISC",
+    "scripts": {
+        "dev": "docker-compose --env-file ./.env.dev up -d",
+        "compose:down": "docker-compose --env-file ./.env.dev down --remove-orphans"
+    }
+}

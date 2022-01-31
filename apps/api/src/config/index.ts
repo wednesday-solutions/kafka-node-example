@@ -13,7 +13,7 @@ const env = cleanEnv(process.env, {
     POSTGRES_HOST: str({ default: "localhost" }),
     POSTGRES_PORT: port({ default: 5432 }),
     POSTGRES_DB: str({ default: "test_db" }),
-    REDIS_HOST: str({ default: "redis://127.0.0.1" }),
+    REDIS_HOST: str({ default: "127.0.0.1" }),
     TOKEN_SECRET: str({ default: "definitely_not_a_secret_string" }),
 });
 

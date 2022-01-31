@@ -1,6 +1,4 @@
 import { Server } from "http";
-import fs from "fs";
-import path from "path";
 import Fastify, { FastifyInstance } from "fastify";
 // plugins
 import mercurius from "mercurius";
@@ -10,16 +8,27 @@ import GracefulServer from "@gquittet/graceful-server";
 
 import { Connection, IDatabaseDriver, MikroORM } from "@mikro-orm/core";
 import { GraphQLSchema } from "graphql";
-import { buildSchema, registerEnumType } from "type-graphql";
+import { buildSchema } from "type-graphql";
+import { Producer } from "kafkajs";
+import { RedisPubSub } from "graphql-redis-subscriptions";
+import Redis from "ioredis";
 
 import { getContext } from "@/utils/interfaces/context.interface";
-
 import config from "@/config";
 import connectDatabase from "@/connectDatabase";
+import { connectKafka } from "@/connectKafka";
 
 const _importDynamic = new Function("modulePath", "return import(modulePath)");
 
-// const __dirname = path.resolve();
+const options: Redis.RedisOptions = {
+    host: config.env.REDIS_HOST,
+    retryStrategy: (times) => Math.max(times * 100, 3000),
+};
+
+const pubSub = new RedisPubSub({
+    publisher: new Redis(options),
+    subscriber: new Redis(options),
+});
 
 export class Application {
     public instance: FastifyInstance;
@@ -28,6 +37,7 @@ export class Application {
     public gracefulServer: any;
     public appDomain: string = config.api.domain;
     public appPort: number = config.api.port;
+    public kafkaProducer!: Producer;
 
     public constructor() {
         this.instance = Fastify({
@@ -45,7 +55,7 @@ export class Application {
 
     public async init() {
         await this.initializeGraphql();
-        this.orm = await connectDatabase();
+
         const fastifyPrintRoutes = await _importDynamic("fastify-print-routes");
         this.instance.register(fastifyPrintRoutes);
         this.instance.listen(this.appPort, (error) => {
@@ -62,6 +72,7 @@ export class Application {
         const schema: GraphQLSchema = await buildSchema({
             resolvers: [`${__dirname}/**/*.resolver.{ts,js}`],
             dateScalarMode: "isoDate",
+            pubSub,
         });
 
         this.instance.register(mercurius, {
@@ -70,7 +81,7 @@ export class Application {
             ide: true,
             path: "/graphql",
             allowBatchedQueries: true,
-            context: (request) => getContext(request, this.orm.em.fork()),
+            context: (request) => getContext(request, this.orm.em.fork(), this.kafkaProducer),
         });
         this.instance.register(mercuriusUpload, {
             maxFileSize: 1000000,
@@ -85,8 +96,11 @@ export class Application {
     }
 
     private makeApiGraceful() {
-        this.gracefulServer.on(GracefulServer.READY, () => {
+        this.gracefulServer.on(GracefulServer.READY, async () => {
             this.instance.log.info(`Server is running on ${this.appDomain}:${this.appPort} 🌟👻`);
+            this.orm = await connectDatabase();
+            this.kafkaProducer = await connectKafka();
+            console.log(this.kafkaProducer);
         });
 
         this.gracefulServer.on(GracefulServer.SHUTTING_DOWN, () => {

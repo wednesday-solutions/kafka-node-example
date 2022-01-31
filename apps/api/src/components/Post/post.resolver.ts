@@ -32,29 +32,10 @@ export class PostResolver {
         const post = new Post(input);
 
         await ctx.em.persist(post).flush();
+        ctx.kafkaProducer.send({
+            topic: "new-post",
+            messages: [{ key: post.id, value: JSON.stringify(post) }],
+        });
         return post;
-    }
-
-    @Mutation(() => Post)
-    public async updatePost(
-        @Arg("input") input: PostValidator,
-        @Arg("id") id: string,
-        @Ctx() ctx: MyContext,
-        @Info() info: GraphQLResolveInfo
-    ): Promise<Post> {
-        const post = await ctx.em.getRepository(Post).findOneOrFail({ id });
-        post.assign(input);
-
-        await ctx.em.persist(post).flush();
-
-        return post;
-    }
-
-    @Mutation(() => Boolean)
-    public async deletePost(@Arg("id") id: string, @Ctx() ctx: MyContext): Promise<boolean> {
-        const post = await ctx.em.getRepository(Post).findOneOrFail({ id });
-        await ctx.em.getRepository(Post).remove(post).flush();
-
-        return true;
     }
 }
