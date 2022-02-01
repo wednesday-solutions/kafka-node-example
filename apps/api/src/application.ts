@@ -18,8 +18,6 @@ import config from "@/config";
 import connectDatabase from "@/connectDatabase";
 import { connectKafka } from "@/connectKafka";
 
-const _importDynamic = new Function("modulePath", "return import(modulePath)");
-
 const options: Redis.RedisOptions = {
     host: config.env.REDIS_HOST,
     retryStrategy: (times) => Math.max(times * 100, 3000),
@@ -45,9 +43,6 @@ export class Application {
             ignoreTrailingSlash: true,
             trustProxy: ["127.0.0.1"],
         });
-
-        // this.instance.register(authService);
-
         this.gracefulServer = GracefulServer(this.instance.server);
         this.makeApiGraceful();
         this.routes();
@@ -55,9 +50,9 @@ export class Application {
 
     public async init() {
         await this.initializeGraphql();
+        this.orm = await connectDatabase();
+        this.kafkaProducer = await connectKafka();
 
-        const fastifyPrintRoutes = await _importDynamic("fastify-print-routes");
-        this.instance.register(fastifyPrintRoutes);
         this.instance.listen(this.appPort, (error) => {
             if (error) {
                 this.orm.close();
@@ -98,9 +93,6 @@ export class Application {
     private makeApiGraceful() {
         this.gracefulServer.on(GracefulServer.READY, async () => {
             this.instance.log.info(`Server is running on ${this.appDomain}:${this.appPort} 🌟👻`);
-            this.orm = await connectDatabase();
-            this.kafkaProducer = await connectKafka();
-            console.log(this.kafkaProducer);
         });
 
         this.gracefulServer.on(GracefulServer.SHUTTING_DOWN, () => {
