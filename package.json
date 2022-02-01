@@ -19,13 +19,7 @@
     },
     "scripts": {
         "prepare": "husky install",
-        "dev": "turbo run dev --parallel"
-    },
-    "turbo": {
-        "pipeline": {
-            "dev": {
-                "cache": false
-            }
-        }
+        "dev": "turbo run dev --parallel",
+        "lint": "turbo run lint --parallel"
     }
 }

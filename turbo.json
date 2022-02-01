@@ -1,0 +1,17 @@
+{
+    "pipeline": {
+        "dev": {
+            "cache": false
+        },
+        "build": {
+            "dependsOn": ["^build"]
+        },
+        "test": {
+            "dependsOn": ["build"]
+        },
+        "deploy": {
+            "dependsOn": ["build", "test", "lint"]
+        },
+        "lint": {}
+    }
+}
