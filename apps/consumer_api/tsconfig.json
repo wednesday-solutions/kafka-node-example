@@ -1,0 +1,14 @@
+{
+    "extends": "tsconfig/api.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["./src/*"]
+        }
+    },
+    "include": ["./src/**/*.ts"],
+    "exclude": ["node_modules"]
+}
