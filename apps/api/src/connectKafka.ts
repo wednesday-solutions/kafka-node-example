@@ -6,11 +6,11 @@ const kafka = new Kafka({
     brokers: config.kafka.hosts,
 });
 
-export const connectKafka = async (): Promise<Producer> => {
+export const connectKafkaProducer = async (): Promise<Producer> => {
     const producer = kafka.producer();
     await producer.connect();
 
     return producer;
 };
 
-export default connectKafka;
+export default connectKafkaProducer;

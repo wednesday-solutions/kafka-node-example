@@ -4,7 +4,6 @@ const env = cleanEnv(process.env, {
     NODE_ENV: str({
         choices: ["development", "test", "production", "staging"],
     }),
-    NODE_DEV: bool({ default: false }),
     API_PORT: port({ default: 6000 }),
     DOMAIN: url({ default: "http://localhost" }),
     ADMIN_EMAIL: email({ default: "admin@example.com" }),
@@ -34,5 +33,6 @@ export default {
     },
     kafka: {
         hosts: env.KAFKA_HOSTS.split(","),
+        topic: "new-post",
     },
 };

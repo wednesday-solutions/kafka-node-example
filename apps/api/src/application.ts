@@ -16,7 +16,7 @@ import Redis from "ioredis";
 import { getContext } from "@/utils/interfaces/context.interface";
 import config from "@/config";
 import connectDatabase from "@/connectDatabase";
-import { connectKafka } from "@/connectKafka";
+import { connectKafkaProducer } from "@/connectKafka";
 
 const options: Redis.RedisOptions = {
     host: config.env.REDIS_HOST,
@@ -51,7 +51,7 @@ export class Application {
     public async init() {
         await this.initializeGraphql();
         this.orm = await connectDatabase();
-        this.kafkaProducer = await connectKafka();
+        this.kafkaProducer = await connectKafkaProducer();
 
         this.instance.listen(this.appPort, (error) => {
             if (error) {

@@ -17,7 +17,6 @@ export const ormConfig: Options = {
     port: config.postgres.port,
     type: "postgresql",
     debug: config.env.isDev,
-    tsNode: config.env.NODE_DEV,
     migrations: {
         path: "./src/migrations",
         tableName: "migrations",
