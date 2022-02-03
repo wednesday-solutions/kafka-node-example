@@ -1,6 +1,6 @@
-# Kafka Producer Graphql Server
+# Kafka Consumer Graphql Server
 
-Creates a post and send it to Kafka broker
+Recieve posts from Kafka broker and publish it to client
 
 ## Featuring
 
