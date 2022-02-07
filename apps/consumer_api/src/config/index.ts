@@ -35,4 +35,7 @@ export default {
         hosts: env.KAFKA_HOSTS.split(","),
         topic: "new-post",
     },
+    graphqlChannels: {
+        NEW_POST: "NEW_POST",
+    },
 };

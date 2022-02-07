@@ -10,23 +10,24 @@ import { Connection, IDatabaseDriver, MikroORM } from "@mikro-orm/core";
 import { GraphQLSchema } from "graphql";
 import { buildSchema } from "type-graphql";
 import { Consumer } from "kafkajs";
-import { RedisPubSub } from "graphql-redis-subscriptions";
-import Redis from "ioredis";
+// import { RedisPubSub } from "graphql-redis-subscriptions";
+import { KafkaPubSub } from "graphql-kafkajs-subscriptions";
+// import Redis from "ioredis";
 
 import { getContext } from "@/utils/interfaces/context.interface";
 import config from "@/config";
 import connectDatabase from "@/connectDatabase";
 import { connectKafkaConsumer } from "@/connectKafka";
 
-const options: Redis.RedisOptions = {
-    host: config.env.REDIS_HOST,
-    retryStrategy: (times) => Math.max(times * 100, 3000),
-};
+// const options: Redis.RedisOptions = {
+//     host: config.env.REDIS_HOST,
+//     retryStrategy: (times) => Math.max(times * 100, 3000),
+// };
 
-const pubSub = new RedisPubSub({
-    publisher: new Redis(options),
-    subscriber: new Redis(options),
-});
+// export const pubSub = new RedisPubSub({
+//     publisher: new Redis(options),
+//     subscriber: new Redis(options),
+// });
 
 export class Application {
     public instance: FastifyInstance;
@@ -36,6 +37,7 @@ export class Application {
     public appDomain: string = config.api.domain;
     public appPort: number = config.api.port;
     public kafkaConsumer!: Consumer;
+    public kafkaPubSub!: KafkaPubSub;
 
     public constructor() {
         this.instance = Fastify({
@@ -49,10 +51,11 @@ export class Application {
     }
 
     public async init() {
-        await this.initializeGraphql();
         this.orm = await connectDatabase();
-        this.kafkaConsumer = await connectKafkaConsumer();
-
+        const { consumer, pubsub } = await connectKafkaConsumer();
+        this.kafkaConsumer = consumer;
+        this.kafkaPubSub = pubsub;
+        await this.initializeGraphql();
         this.instance.listen(this.appPort, (error) => {
             if (error) {
                 this.orm.close();
@@ -67,7 +70,7 @@ export class Application {
         const schema: GraphQLSchema = await buildSchema({
             resolvers: [`${__dirname}/**/*.resolver.{ts,js}`],
             dateScalarMode: "isoDate",
-            pubSub,
+            pubSub: this.kafkaPubSub,
         });
 
         this.instance.register(mercurius, {
@@ -77,6 +80,12 @@ export class Application {
             path: "/graphql",
             allowBatchedQueries: true,
             context: (request) => getContext(request, this.orm.em.fork(), this.kafkaConsumer),
+            subscription: {
+                onConnect: (data) => {
+                    console.log("Websocket Client Connected");
+                    return data;
+                },
+            },
         });
         this.instance.register(mercuriusUpload, {
             maxFileSize: 1000000,

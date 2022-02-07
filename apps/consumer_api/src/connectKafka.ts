@@ -1,4 +1,5 @@
 import { Kafka, Consumer } from "kafkajs";
+import { KafkaPubSub } from "graphql-kafkajs-subscriptions";
 import config from "@/config";
 
 const kafka = new Kafka({
@@ -7,20 +8,31 @@ const kafka = new Kafka({
     // logLevel: logLevel.WARN,
 });
 
-export const connectKafkaConsumer = async (groupId = "test-group"): Promise<Consumer> => {
+export const connectKafkaConsumer = async (
+    groupId = "test-group"
+): Promise<{ consumer: Consumer; pubsub: KafkaPubSub }> => {
     const consumer = kafka.consumer({ groupId });
+
+    const pubsub = await KafkaPubSub.create({
+        topic: "my-topic",
+        kafka: kafka,
+        groupIdPrefix: "graphql-subs", // used for kafka pub/sub,
+        producerConfig: {}, // optional kafkajs producer configuration
+        consumerConfig: {}, // optional kafkajs consumer configuration
+    });
+
     await consumer.connect();
-    await consumer.subscribe({ topic: config.kafka.topic, fromBeginning: true });
+    await consumer.subscribe({ topic: config.kafka.topic });
     await consumer.run({
-        // eachBatch: async ({ batch }) => {
-        //   console.log(batch)
-        // },
         eachMessage: async ({ topic, partition, message }) => {
-            const prefix = `${topic}[${partition} | ${message.offset}] / ${message.timestamp}`;
-            console.log(JSON.parse(message.value.toString()));
+            // const prefix = `${topic}[${partition} | ${message.offset}] / ${message.timestamp}`;
+            const response = JSON.parse(message.value.toString());
+            // console.log(response);
+            await pubsub.publish(config.graphqlChannels.NEW_POST, message.value);
         },
     });
-    return consumer;
+
+    return { consumer, pubsub };
 };
 
 export default connectKafkaConsumer;
