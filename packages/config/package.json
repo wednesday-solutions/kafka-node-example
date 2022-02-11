@@ -2,7 +2,7 @@
     "name": "config",
     "version": "0.0.0",
     "main": "index.js",
-    "author": "Alexander Zeitler <alexander.zeitler@pdmlab.com>",
+    "author": "Tousif Islam",
     "license": "MIT",
     "private": true,
     "files": [
