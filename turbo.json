@@ -1,17 +1,21 @@
 {
+    "baseBranch": "origin/main",
     "pipeline": {
-        "dev": {
-            "cache": false
-        },
-        "build": {
-            "dependsOn": ["^build"]
-        },
-        "test": {
+        "deploy": {
             "dependsOn": ["build"]
         },
-        "deploy": {
-            "dependsOn": ["build", "test", "lint"]
+        "build": {
+            "dependsOn": ["^build", "test"]
         },
-        "lint": {}
+        "test": {
+            "dependsOn": ["lint"],
+            "outputs": []
+        },
+        "lint": {
+            "outputs": []
+        },
+        "dev": {
+            "cache": false
+        }
     }
 }
