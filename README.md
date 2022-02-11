@@ -1,18 +1,32 @@
 # Turborepo Node Kafka Graphql React
 
+Objective: Demonstrate usage of kafka
+
+[Kafka Fundamentals](https://www.youtube.com/watch?v=Ch5VhJzaoaI)
+
 ## Tools used
 
+Build system: [Turborepo](https://turborepo.org/)
+
 -   Global
+
     -   Node.js 16
     -   yarn
     -   docker-compose
+
 -   API
-    -   TypeGraphQL
-    -   Fastify
+
+    -   [KafkaJS](https://kafka.js.org/)
+    -   [Kafka Graphql Subscriptions](https://github.com/tomasAlabes/graphql-kafkajs-subscriptions)
+    -   [TypeGraphql](https://typegraphql.com/)
+    -   [Fastify](fastify.io) / [Mercurius](https://mercurius.dev/)
+    -   [Mikro ORM](https://mikro-orm.io/)
     -   Postgres
+    -   Kafka
+
 -   Frontend
-    -   react
-    -   vite
+    -   React
+    -   [Vite](https://vitejs.dev)
 
 ## Workspaces
 
@@ -30,7 +44,8 @@ In this starter kit these workspaces are defined already:
 
 ```text
 apps
-  - api
+  - producer_server
+  - consumer_server
   - ui
 services
   - message_broker
