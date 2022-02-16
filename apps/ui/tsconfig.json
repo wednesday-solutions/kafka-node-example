@@ -1,4 +1,12 @@
 {
-  "extends": "tsconfig/ui.json",
-  "include": ["./src"]
+    "extends": "tsconfig/ui.json",
+    "include": ["./src"],
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "utils/*": ["./src/utils/*"],
+            "components/*": ["./src/components/*"],
+            "@/*": ["./src/*"]
+        }
+    }
 }

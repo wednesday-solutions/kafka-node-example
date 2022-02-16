@@ -3,7 +3,7 @@ name: CI
 on:
     push:
         branches:
-            - "**"
+            - main
     pull_request:
 
 jobs:
@@ -23,6 +23,7 @@ jobs:
               uses: actions/setup-node@v2
               with:
                   node-version: ${{ matrix.node-version }}
+                  cache: "yarn"
 
             - name: Extract out parent branch
               shell: bash
@@ -30,12 +31,12 @@ jobs:
               id: extract_parent_branch
 
             - name: Install dependencies
-              run: npm install -g yarn
+              run: yarn
 
             - name: Lint, test and build (push)
               if: ${{ github.event_name == 'push' }}
-              run: yarn && yarn turbo run build --since=${{ steps.extract_parent_branch.outputs.parent_branch }}
+              run: yarn turbo run build --since=${{ steps.extract_parent_branch.outputs.parent_branch }}
 
             - name: Lint, test and build (pull request)
               if: ${{ github.event_name == 'pull_request' }}
-              run: yarn && yarn turbo run build --since=origin/${{ github.base_ref }}
+              run: yarn turbo run build --since=origin/${{ github.base_ref }}

@@ -5,6 +5,7 @@ import mercurius from "mercurius";
 import mercuriusUpload from "mercurius-upload";
 import prettifier from "@mgcrea/pino-pretty-compact";
 import GracefulServer from "@gquittet/graceful-server";
+import fastifyCors from "fastify-cors";
 
 import { Connection, IDatabaseDriver, MikroORM } from "@mikro-orm/core";
 import { GraphQLSchema } from "graphql";
@@ -51,6 +52,7 @@ export class Application {
     }
 
     public async init() {
+        this.instance.register(fastifyCors);
         this.orm = await connectDatabase();
         const { consumer, pubsub } = await connectKafkaConsumer();
         this.kafkaConsumer = consumer;
