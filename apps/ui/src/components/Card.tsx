@@ -3,10 +3,10 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-import usePosts from "@/hooks/usePosts";
+import useReadPosts from "@/hooks/useReadPosts";
 
 export default function CustomCard() {
-    const { data } = usePosts();
+    const { data } = useReadPosts(50);
     return (
         <Grid sx={{ marginTop: "1rem" }} container justifyContent="center" spacing={2}>
             {data?.map((item, i) => (

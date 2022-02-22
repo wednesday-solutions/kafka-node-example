@@ -23,14 +23,14 @@ interface ApiResponse {
     ];
 }
 
-const usePosts = () => {
+const useReadPosts = (limit = 10) => {
     const [result] = useQuery<ApiResponse>({
         query: GET_POSTS,
-        variables: { limit: 10 },
+        variables: { limit },
     });
 
     const filteredResult = result.data?.getPosts;
     return { data: filteredResult, error: result.error, loading: result.fetching };
 };
 
-export default usePosts;
+export default useReadPosts;

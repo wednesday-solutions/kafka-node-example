@@ -1,15 +1,15 @@
 import React from "react";
 import Container from "@mui/material/Container";
-import AppBar from "components/AppBar";
+import { Provider } from "urql";
 import Card from "components/Card";
+import graphqlClient from "@/graphqlClient";
 
 export default function Home() {
     return (
-        <div>
-            <AppBar />
+        <Provider value={graphqlClient}>
             <Container>
                 <Card />
             </Container>
-        </div>
+        </Provider>
     );
 }

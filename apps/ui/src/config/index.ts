@@ -1,6 +1,7 @@
 export default {
     env: {
-        API_BASE_URL: process.env.API_BASE_URL,
+        API_BASE_URL1: process.env.API_BASE_URL1 || "http://localhost:7000",
+        API_BASE_URL2: process.env.API_BASE_URL2 || "http://localhost:7001",
         NODE_ENV: process.env.NODE_ENV,
     },
     graphqlChannels: {

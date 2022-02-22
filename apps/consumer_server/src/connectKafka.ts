@@ -1,6 +1,8 @@
 import { Kafka, Consumer } from "kafkajs";
 import { KafkaPubSub } from "graphql-kafkajs-subscriptions";
+import { DI } from "@/application";
 import config from "@/config";
+import { Post } from "@/components/Post";
 
 const kafka = new Kafka({
     clientId: config.env.KAFKA_CLIENT_ID,
@@ -27,7 +29,10 @@ export const connectKafkaConsumer = async (
         eachMessage: async ({ topic, partition, message }) => {
             // const prefix = `${topic}[${partition} | ${message.offset}] / ${message.timestamp}`;
             const response = JSON.parse(message.value.toString());
-            // console.log(response);
+            console.log(response);
+            const post = new Post(response);
+
+            await DI.orm.em.persist(post).flush();
             await pubsub.publish(config.graphqlChannels.NEW_POST, message.value);
         },
     });

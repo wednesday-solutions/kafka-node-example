@@ -6,6 +6,12 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import Link from "@/components/Link";
+
+const pages = [
+    { to: "/", title: "Read Posts" },
+    { to: "/create", title: "Create Post" },
+];
 
 export default function ButtonAppBar() {
     return (
@@ -21,9 +27,15 @@ export default function ButtonAppBar() {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    <Typography variant="h6" component="div" sx={{ paddingRight: "1rem" }}>
                         Node Kafka
                     </Typography>
+
+                    {pages.map((page) => (
+                        <Box component="div" key={page.title} sx={{ paddingRight: "1rem" }}>
+                            <Link to={page.to}>{page.title}</Link>
+                        </Box>
+                    ))}
                 </Toolbar>
             </AppBar>
         </Box>

@@ -13,23 +13,14 @@ import { buildSchema } from "type-graphql";
 import { Consumer } from "kafkajs";
 // import { RedisPubSub } from "graphql-redis-subscriptions";
 import { KafkaPubSub } from "graphql-kafkajs-subscriptions";
-// import Redis from "ioredis";
 
 import { getContext } from "@/utils/interfaces/context.interface";
 import config from "@/config";
 import connectDatabase from "@/connectDatabase";
 import { connectKafkaConsumer } from "@/connectKafka";
 
-// const options: Redis.RedisOptions = {
-//     host: config.env.REDIS_HOST,
-//     retryStrategy: (times) => Math.max(times * 100, 3000),
-// };
-
-// export const pubSub = new RedisPubSub({
-//     publisher: new Redis(options),
-//     subscriber: new Redis(options),
-// });
-
+// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+export const DI = {} as { orm: MikroORM };
 export class Application {
     public instance: FastifyInstance;
     public orm!: MikroORM<IDatabaseDriver<Connection>>;
@@ -54,6 +45,8 @@ export class Application {
     public async init() {
         this.instance.register(fastifyCors);
         this.orm = await connectDatabase();
+        DI.orm = this.orm;
+
         const { consumer, pubsub } = await connectKafkaConsumer();
         this.kafkaConsumer = consumer;
         this.kafkaPubSub = pubsub;

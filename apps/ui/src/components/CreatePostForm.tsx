@@ -2,14 +2,20 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import useCreatePost from "@/hooks/useCreatePosts";
 
 export default function MultilineTextFields() {
     const [value, setValue] = React.useState("");
+    const [newPost, createPost] = useCreatePost();
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setValue(event.target.value);
     };
 
+    const submitPost = () => {
+        createPost({ title: value, userName: "Tousif" });
+    };
+    console.log(newPost);
     return (
         <Box
             component="form"
@@ -30,7 +36,7 @@ export default function MultilineTextFields() {
                 onChange={handleChange}
             />
             <div>
-                <Button sx={{ marginTop: "0.5rem" }} variant="contained">
+                <Button sx={{ marginTop: "0.5rem" }} onClick={submitPost} variant="contained">
                     Submit
                 </Button>
             </div>
