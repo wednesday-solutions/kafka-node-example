@@ -10,9 +10,9 @@ interface LinkRouterProps {
     sx?: SxProps<Theme>;
 }
 
-export default function LinkRouter({ children, to, ...props }: LinkRouterProps): ReactElement {
+export default function LinkRouter({ children, ...props }: LinkRouterProps): ReactElement {
     return (
-        <Link underline="none" component={RouterLink} to={to} {...props}>
+        <Link underline="none" component={RouterLink} {...props}>
             {children}
         </Link>
     );

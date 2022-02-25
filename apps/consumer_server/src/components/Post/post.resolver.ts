@@ -9,10 +9,11 @@ import config from "@/config";
 export class PostResolver {
     @Query(() => [Post])
     public async getPosts(
+        @Arg("sortBy") sortBy: string,
         @Ctx() ctx: MyContext,
         @Info() info: GraphQLResolveInfo
     ): Promise<Post[]> {
-        return ctx.em.getRepository(Post).findAll();
+        return ctx.em.getRepository(Post).findAll({ orderBy: { [sortBy]: "desc" } });
     }
 
     @Query(() => Post, { nullable: true })
