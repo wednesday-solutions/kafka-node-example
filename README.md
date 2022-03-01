@@ -4,6 +4,8 @@ Objective: Demonstrate usage of kafka
 
 [Kafka Fundamentals](https://www.youtube.com/watch?v=Ch5VhJzaoaI)
 
+![Diagram](assets/diagram.png)
+
 ## Tools used
 
 Build system: [Turborepo](https://turborepo.org/)
