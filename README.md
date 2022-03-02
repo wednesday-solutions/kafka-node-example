@@ -67,5 +67,5 @@ packages
 ![Screenshot](assets/2022-01-12-13-49-33.png)
 `yarn dev` output
 
-![Screenshot](assets/node_kafka_fe.png)
+![Screenshot](assets/node-kafka-fe.gif)
 `http://localhost:3000` output
