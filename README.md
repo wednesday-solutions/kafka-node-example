@@ -64,7 +64,7 @@ packages
 -   Start the stack using `yarn dev`
 -   Browse [http://localhost:3000](http://localhost:3000)
 
-![Screenshot](assets/2022-01-12-13-49-33.png)
+![Screenshot](assets/terminal.png)
 `yarn dev` output
 
 ![Screenshot](assets/node-kafka-fe.gif)
