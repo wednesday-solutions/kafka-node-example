@@ -33,7 +33,7 @@ export class PostResolver {
         const post = new Post(input);
 
         await ctx.em.persist(post).flush();
-        if (post.title.length < 15) {
+        if (post.title.length < 25) {
             ctx.kafkaProducer.send({
                 topic: config.kafka.topic,
                 messages: [{ key: "small", value: JSON.stringify(post) }],

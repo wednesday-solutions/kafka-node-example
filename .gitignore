@@ -101,7 +101,8 @@ modules.xml
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -196,7 +197,6 @@ web_modules/
 
 # dotenv environment variables file
 .env
-.env.test
 .env.production
 
 # parcel-bundler cache (https://parceljs.org/)

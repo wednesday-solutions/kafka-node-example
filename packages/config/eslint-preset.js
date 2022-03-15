@@ -1,6 +1,6 @@
 module.exports = {
     extends: ["alloy", "alloy/typescript", "alloy/react"],
-    ignorePatterns: ["**/migrations/*.ts", "dist/*"],
+    ignorePatterns: ["**/migrations/*.ts", "dist/*", "**/*.config.js"],
     overrides: [
         {
             files: ["*.resolver.ts"],
@@ -10,4 +10,9 @@ module.exports = {
         },
     ],
     plugins: ["prettier"],
+    settings: {
+        react: {
+            version: "detect",
+        },
+    },
 };

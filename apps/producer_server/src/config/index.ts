@@ -1,4 +1,7 @@
 import { cleanEnv, str, email, port, bool, url } from "envalid";
+import { config } from "envars";
+
+config({ env: process.env.NODE_ENV || "development" });
 
 const env = cleanEnv(process.env, {
     NODE_ENV: str({
