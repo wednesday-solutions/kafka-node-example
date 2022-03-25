@@ -1,4 +1,4 @@
-import { Kafka, Consumer } from "kafkajs";
+import { Kafka, Consumer, logLevel } from "kafkajs";
 import { KafkaPubSub } from "graphql-kafkajs-subscriptions";
 import { DI } from "@/application";
 import config from "@/config";
@@ -7,7 +7,7 @@ import { Post } from "@/components/Post";
 const kafka = new Kafka({
     clientId: config.env.KAFKA_CLIENT_ID,
     brokers: config.kafka.hosts,
-    // logLevel: logLevel.WARN,
+    logLevel: logLevel.WARN,
 });
 
 export const connectKafkaConsumer = async (
@@ -32,7 +32,7 @@ export const connectKafkaConsumer = async (
             console.log(response);
             const post = new Post(response);
 
-            await DI.orm.em.persist(post).flush();
+            await DI.em.persist(post).flush();
             await pubsub.publish(config.graphqlChannels.NEW_POST, message.value);
         },
     });

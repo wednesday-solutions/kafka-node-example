@@ -7,7 +7,7 @@ import prettifier from "@mgcrea/pino-pretty-compact";
 import GracefulServer from "@gquittet/graceful-server";
 import fastifyCors from "fastify-cors";
 
-import { Connection, IDatabaseDriver, MikroORM } from "@mikro-orm/core";
+import { Connection, IDatabaseDriver, MikroORM, EntityManager } from "@mikro-orm/core";
 import { GraphQLSchema } from "graphql";
 import { buildSchema } from "type-graphql";
 import { Consumer } from "kafkajs";
@@ -20,20 +20,21 @@ import connectDatabase from "@/connectDatabase";
 import { connectKafkaConsumer } from "@/connectKafka";
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-export const DI = {} as { orm: MikroORM };
+export const DI = {} as { em: EntityManager };
 export class Application {
     public instance: FastifyInstance;
     public orm!: MikroORM<IDatabaseDriver<Connection>>;
     public server!: Server;
     public gracefulServer: any;
     public appDomain: string = config.api.domain;
-    public appPort: number = config.api.port;
+    public appPort: number;
     public kafkaConsumer!: Consumer;
     public kafkaPubSub!: KafkaPubSub;
 
-    public constructor() {
+    public constructor(port = config.api.port) {
+        this.appPort = port;
         this.instance = Fastify({
-            logger: { prettyPrint: config.env.isDev, prettifier },
+            logger: config.env.isTest ? false : { prettyPrint: config.env.isDev, prettifier },
             ignoreTrailingSlash: true,
             trustProxy: ["127.0.0.1"],
         });
@@ -45,20 +46,24 @@ export class Application {
     public async init() {
         this.instance.register(fastifyCors);
         this.orm = await connectDatabase();
-        DI.orm = this.orm;
+        DI.em = this.orm.em.fork();
 
         const { consumer, pubsub } = await connectKafkaConsumer();
         this.kafkaConsumer = consumer;
         this.kafkaPubSub = pubsub;
         await this.initializeGraphql();
-        this.instance.listen(this.appPort, (error) => {
-            if (error) {
-                this.orm.close();
-                this.instance.log.error(error);
-                process.exit(1);
-            }
+
+        this.server = this.instance.server;
+        try {
+            await this.instance.listen(this.appPort);
             this.gracefulServer.setReady();
-        });
+        } catch (error) {
+            this.orm.close();
+            this.instance.log.error(error);
+            process.exit(1);
+        }
+
+        return { pubsub };
     }
 
     private async initializeGraphql() {
@@ -66,6 +71,7 @@ export class Application {
             resolvers: [`${__dirname}/**/*.resolver.{ts,js}`],
             dateScalarMode: "isoDate",
             pubSub: this.kafkaPubSub,
+            emitSchemaFile: true,
         });
 
         this.instance.register(mercurius, {

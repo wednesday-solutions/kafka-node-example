@@ -1,13 +1,7 @@
-import { AsyncLocalStorage } from "async_hooks";
-import { Options, EntityManager } from "@mikro-orm/core";
-// import { TsMorphMetadataProvider } from "@mikro-orm/reflection";
+import { Options } from "@mikro-orm/core";
 import config from "@/config";
 
-const storage = new AsyncLocalStorage<EntityManager>();
-
 export const ormConfig: Options = {
-    // metadataProvider: TsMorphMetadataProvider,
-    context: () => storage.getStore(),
     entities: ["dist/**/*.entity.js"],
     entitiesTs: ["src/**/*.entity.ts"],
     user: config.postgres.user,
