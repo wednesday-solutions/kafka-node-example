@@ -12,3 +12,7 @@ services:
         ports:
             - "54320:5432"
         tmpfs: /var/lib/postgresql/data
+
+networks:
+    default:
+        name: "producer-server-network"
