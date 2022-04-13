@@ -6,9 +6,13 @@
             "dependsOn": ["build"]
         },
         "build": {
-            "dependsOn": ["^build", "test"]
+            "dependsOn": ["^build", "test:ci"]
         },
         "test": {
+            "dependsOn": ["lint"],
+            "outputs": []
+        },
+        "test:ci": {
             "dependsOn": ["lint"],
             "outputs": []
         },

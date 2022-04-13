@@ -1,0 +1,230 @@
+{
+    "data": {
+        "getPosts": [
+            {
+                "id": "8f81fc81-5892-4307-a444-dd5ed54d2b7d",
+                "createdAt": "2022-03-24T12:25:11.000Z",
+                "updatedAt": null,
+                "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+                "userName": "Tousif",
+                "__typename": "Post"
+            },
+            {
+                "id": "97da2ed3-b5d1-4e41-a8c6-22de3312f89a",
+                "createdAt": "2022-03-11T10:33:01.000Z",
+                "updatedAt": null,
+                "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+                "userName": "Tousif",
+                "__typename": "Post"
+            },
+            {
+                "id": "5b3c9e80-49eb-4021-a7c6-8137cf2226d6",
+                "createdAt": "2022-03-02T13:59:33.000Z",
+                "updatedAt": null,
+                "title": "No One Can Make You Feel Inferior Without Your Consent",
+                "userName": "Tousif",
+                "__typename": "Post"
+            },
+            {
+                "id": "95a00417-1624-4fee-8834-f82b9476230f",
+                "createdAt": "2022-02-25T13:36:48.000Z",
+                "updatedAt": null,
+                "title": "I have a moral code, but I haven't figured out how to read it yet",
+                "userName": "Tousif",
+                "__typename": "Post"
+            },
+            {
+                "id": "a8de24f3-ac3b-4a3e-8131-528dc8a852be",
+                "createdAt": "2022-02-25T13:36:04.000Z",
+                "updatedAt": null,
+                "title": "If you work for an ad agency and getting paid for it aren't you the one who is being influenced by advertising",
+                "userName": "Tousif",
+                "__typename": "Post"
+            },
+            {
+                "id": "1a6db9aa-ba2c-4408-ac06-a9a57c25e188",
+                "createdAt": "2022-02-25T13:15:21.000Z",
+                "updatedAt": null,
+                "title": "North America should be called Russia since people are always moving so fast",
+                "userName": "Tousif",
+                "__typename": "Post"
+            },
+            {
+                "id": "292df547-ec28-4020-9c50-23b92e31d6d1",
+                "createdAt": "2022-02-25T13:14:42.000Z",
+                "updatedAt": null,
+                "title": "I think of a lot of good ideas when going to the bathroom - I guess I have a real stream of consciousness",
+                "userName": "Tousif",
+                "__typename": "Post"
+            },
+            {
+                "id": "73913571-03fc-4551-977e-dc3ccdd010d5",
+                "createdAt": "2022-02-25T11:24:23.000Z",
+                "updatedAt": null,
+                "title": "If you wake up with a giant zit, you are really facing your fears when you look in the mirror.",
+                "userName": "Tousif",
+                "__typename": "Post"
+            },
+            {
+                "id": "63c02d73-971f-41f1-a17a-e51f29896bd4",
+                "createdAt": "2022-02-25T11:22:45.000Z",
+                "updatedAt": null,
+                "title": "If you work for an ad agency and getting paid for it aren't you the one who is being influenced by advertising?",
+                "userName": "Tousif",
+                "__typename": "Post"
+            },
+            {
+                "id": "b68fafe9-3c33-4293-8866-4e0975fb25f2",
+                "createdAt": "2022-02-25T11:20:03.000Z",
+                "updatedAt": null,
+                "title": "The Car Turned The Corner",
+                "userName": "Tousif",
+                "__typename": "Post"
+            },
+            {
+                "id": "56f7bf1a-a174-4ce5-8e58-bd682c62268c",
+                "createdAt": "2022-02-25T11:16:42.000Z",
+                "updatedAt": null,
+                "title": "There Is So Much To Understand.",
+                "userName": "Tousif",
+                "__typename": "Post"
+            },
+            {
+                "id": "3665a732-c2ca-4f2b-9909-4dd63cce09b6",
+                "createdAt": "2022-02-25T10:50:23.000Z",
+                "updatedAt": null,
+                "title": "No One Can Make You Feel Inferior Without Your Consent.",
+                "userName": "Tousif",
+                "__typename": "Post"
+            },
+            {
+                "id": "3e99eed3-4d95-4c32-9fcf-7d980e24c1bf",
+                "createdAt": "2022-02-25T10:37:54.000Z",
+                "updatedAt": null,
+                "title": "Cemeteries are just garbage dumps filled with humans",
+                "userName": "Tousif",
+                "__typename": "Post"
+            },
+            {
+                "id": "776fa7ca-e0ca-4d84-81a2-905ad85f0cb5",
+                "createdAt": "2022-02-25T09:55:52.000Z",
+                "updatedAt": null,
+                "title": "Twitter is the rice of social media",
+                "userName": "Tousif",
+                "__typename": "Post"
+            },
+            {
+                "id": "3921471d-0b07-4d9d-a7ab-d222ef87ed45",
+                "createdAt": "2022-02-25T09:41:59.000Z",
+                "updatedAt": null,
+                "title": "I have a moral code, but I haven't figured out how to read it yet",
+                "userName": "Tousif",
+                "__typename": "Post"
+            },
+            {
+                "id": "d6612e7a-2654-49af-acc8-2b60dd4aeaad",
+                "createdAt": "2022-02-25T09:40:37.000Z",
+                "updatedAt": null,
+                "title": "You say potatoe, I say starchy carbs",
+                "userName": "Tousif",
+                "__typename": "Post"
+            },
+            {
+                "id": "e1143361-d52a-4611-a0a0-dd68009a58e9",
+                "createdAt": "2022-02-25T09:37:53.000Z",
+                "updatedAt": null,
+                "title": "We say we are walking the dog, but the dog always leads",
+                "userName": "Tousif",
+                "__typename": "Post"
+            },
+            {
+                "id": "5446bba2-a7b6-4ab6-8bd8-8c121457fc65",
+                "createdAt": "2022-02-22T07:33:08.000Z",
+                "updatedAt": null,
+                "title": "The hidden harmony is better than the obvious",
+                "userName": "Tousif",
+                "__typename": "Post"
+            },
+            {
+                "id": "0544c487-09aa-4899-ba1d-ea37abb53ac5",
+                "createdAt": "2022-02-05T09:31:04.000Z",
+                "updatedAt": null,
+                "title": "The only difference between a problem and a solution is that people understand the solution",
+                "userName": "TI",
+                "__typename": "Post"
+            },
+            {
+                "id": "b14c06d5-073b-498d-a15a-2232436bef3b",
+                "createdAt": "2022-02-04T08:49:18.000Z",
+                "updatedAt": null,
+                "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                "userName": "Tousif",
+                "__typename": "Post"
+            },
+            {
+                "id": "6bb8dd9a-ae4e-4acd-8d85-c7a209a707d8",
+                "createdAt": "2022-02-04T08:49:13.000Z",
+                "updatedAt": null,
+                "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                "userName": "Tousif",
+                "__typename": "Post"
+            },
+            {
+                "id": "b77d203d-4cc9-4976-aa69-bca52b181493",
+                "createdAt": "2022-02-04T08:45:43.000Z",
+                "updatedAt": null,
+                "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                "userName": "Tousif",
+                "__typename": "Post"
+            },
+            {
+                "id": "91c0c872-2103-4c0f-85d6-9c3bcc4409a0",
+                "createdAt": "2022-02-04T08:44:05.000Z",
+                "updatedAt": null,
+                "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                "userName": "Tousif",
+                "__typename": "Post"
+            },
+            {
+                "id": "2f85df81-6055-429e-a188-363caab8c804",
+                "createdAt": "2022-02-04T08:43:58.000Z",
+                "updatedAt": null,
+                "title": "The hidden harmony is better than the obvious",
+                "userName": "Tousif",
+                "__typename": "Post"
+            },
+            {
+                "id": "baeadbd2-35ab-4e87-9b89-013f3a304eca",
+                "createdAt": "2022-02-03T13:32:55.000Z",
+                "updatedAt": null,
+                "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                "userName": "Tousif",
+                "__typename": "Post"
+            },
+            {
+                "id": "a6265539-108f-4916-8663-a8cb97e75236",
+                "createdAt": "2022-02-03T13:32:45.000Z",
+                "updatedAt": null,
+                "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                "userName": "Tousif",
+                "__typename": "Post"
+            },
+            {
+                "id": "601816bd-2d7c-4d5b-a51a-773de9f50898",
+                "createdAt": "2022-02-03T13:22:28.000Z",
+                "updatedAt": null,
+                "title": "If you want to accomplish uncommon things, you need to live everyday of your life uncommonly. If you spend your day like everyone else, you will end up like everyone else",
+                "userName": "Tousif",
+                "__typename": "Post"
+            },
+            {
+                "id": "eb1e0e1b-05a7-4385-a420-4c91bc827604",
+                "createdAt": "2022-02-03T13:21:13.000Z",
+                "updatedAt": null,
+                "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                "userName": "Tousif",
+                "__typename": "Post"
+            }
+        ]
+    }
+}

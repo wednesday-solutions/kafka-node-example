@@ -11,7 +11,8 @@
         "prebuild": "rm -rf dist",
         "build": "tsc && tsc-alias",
         "lint": "eslint src/**/*.ts",
-        "test": "env-cmd -f ./.env.test jest --coverage --coverageReporters=\"text-summary\"",
+        "test": "env-cmd -f ./.env.test jest",
+        "test:ci": "env-cmd -f ./.env.test jest --coverage --coverageReporters=\"text-summary\"",
         "gen-migrations": "env-cmd -f ./.env.dev mikro-orm migration:create",
         "compose:up": "docker-compose --env-file ./.env.dev up -d",
         "compose:down": "docker-compose --env-file ./.env.dev down --remove-orphans"
