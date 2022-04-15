@@ -9,8 +9,10 @@ on:
 jobs:
     ci:
         runs-on: ubuntu-latest
+        timeout-minutes: 10
         env:
             BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+            BASE_BRANCH: ${{ github.base_ref }}
         strategy:
             matrix:
                 node-version: [16.x]
@@ -36,8 +38,8 @@ jobs:
 
             - name: Lint, test and build (push)
               if: ${{ github.event_name == 'push' }}
-              run: yarn turbo run build --filter=@scope/*{./apps/*}[HEAD^1]
+              run: yarn turbo run build
 
             - name: Lint, test and build (pull request)
               if: ${{ github.event_name == 'pull_request' }}
-              run: yarn turbo run build --filter=[HEAD^1]
+              run: yarn turbo run build --since=origin/${{ env.BASE_BRANCH }}

@@ -2,7 +2,6 @@
 // const autoRecord = require("cypress-autorecord");
 
 describe("Read posts", function () {
-    // autoRecord();
     beforeEach(() => {
         cy.intercept("**/graphql", { fixture: "posts" }).as("getPosts");
 

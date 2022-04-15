@@ -10,7 +10,7 @@
         "dev": "export NODE_ENV=development && vite --host",
         "prebuild": "rm -rf dist",
         "build": "export NODE_ENV=production && tsc && vite build",
-        "preview": "vite preview --port 5000",
+        "preview": "vite preview --port 3000",
         "lint": "eslint src/**/*.{ts,tsx}",
         "cy:open": "cypress open --config baseUrl=http://localhost:3000",
         "test": "start-server-and-test preview 5000 cy:open",
