@@ -1,11 +1,9 @@
 /// <reference types="cypress" />
-// const autoRecord = require("cypress-autorecord");
 
 const NEW_POST_TEXT =
     "If you work for an ad agency and getting paid for it aren't you the one who is being influenced by advertising?";
 
 describe("Read posts", function () {
-    // autoRecord();
     beforeEach(() => {
         cy.intercept("**/graphql", { fixture: "newPost" }).as("createPost");
 

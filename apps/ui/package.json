@@ -7,18 +7,21 @@
     "license": "MIT",
     "private": true,
     "scripts": {
-        "dev": "export NODE_ENV=development && vite --host",
+        "dev": "export NODE_ENV=development && vite",
         "prebuild": "rm -rf dist",
         "build": "export NODE_ENV=production && tsc && vite build",
         "preview": "vite preview --port 3000",
         "lint": "eslint src/**/*.{ts,tsx}",
         "cy:open": "cypress open --config baseUrl=http://localhost:3000",
-        "test": "start-server-and-test preview 5000 cy:open",
+        "test": "start-server-and-test preview 3000 cy:open",
         "cy:run": "cypress run --config baseUrl=http://localhost:3000",
-        "test:cy": "start-server-and-test preview 3000 cy:run"
+        "test:cy": "start-server-and-test preview 3000 cy:run",
+        "coverage": "npx nyc report --reporter=text",
+        "coverage:summary": "npx nyc report --reporter=text-summary"
     },
     "devDependencies": {
         "@cypress/code-coverage": "^3.9.12",
+        "@cypress/react": "^5.12.4",
         "@cypress/vite-dev-server": "^2.2.2",
         "@tailwindcss/forms": "^0.4.0",
         "@testing-library/cypress": "^8.0.2",
@@ -28,7 +31,6 @@
         "autoprefixer": "^10.4.2",
         "config": "*",
         "cypress": "^9.5.3",
-        "cypress-autorecord": "^3.1.2",
         "cypress-jest-adapter": "^0.1.1",
         "eslint": "^8.6.0",
         "postcss": "^8.4.5",
@@ -36,9 +38,9 @@
         "tailwindcss": "^3.0.13",
         "tsconfig": "*",
         "typescript": "^4.5.4",
-        "vite": "^2.7.10",
+        "vite": "^2.9.5",
         "vite-plugin-checker": "^0.4.2",
-        "vite-plugin-istanbul": "^2.5.1",
+        "vite-plugin-istanbul": "^2.7.1",
         "vite-tsconfig-paths": "^3.3.17"
     },
     "dependencies": {
@@ -46,7 +48,6 @@
         "@emotion/styled": "^11.3.0",
         "@mui/icons-material": "^5.0.5",
         "@mui/material": "^5.0.6",
-        "envalid": "^7.2.2",
         "graphql": "^16.0.1",
         "graphql-ws": "^5.6.1",
         "history": "^5.2.0",

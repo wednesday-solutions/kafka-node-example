@@ -1,5 +1,4 @@
 /// <reference types="cypress" />
-// const autoRecord = require("cypress-autorecord");
 
 describe("Read posts", function () {
     beforeEach(() => {

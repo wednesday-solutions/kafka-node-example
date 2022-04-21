@@ -4,16 +4,24 @@ on:
     push:
         paths:
             - "apps/ui/**"
-            - ".github/workflows/cypress.yaml"
+            - ".github/workflows/cypress.yml"
 
 jobs:
     cypress-run:
         runs-on: ubuntu-latest
         timeout-minutes: 10
-        # container: cypress/browsers:node16.13.2-chrome100-ff98
         steps:
             - name: Checkout
               uses: actions/checkout@v2
+
+            - name: Cypress run
+              uses: cypress-io/github-action@v2
+              with:
+                  install: true
+                  working-directory: apps/ui
+                  # build: yarn build
+                  start: yarn dev
+                  wait-on: "http://localhost:3000"
 
             - uses: actions/upload-artifact@v2
               if: failure()
@@ -21,11 +29,12 @@ jobs:
                   name: cypress-screenshots
                   path: cypress/screenshots
 
-            - name: Cypress run
-              uses: cypress-io/github-action@v2
+            - name: List
+              run: ls apps/ui/*
+
+            - name: Monitor coverage
+              uses: slavcodev/coverage-monitor-action@v1
               with:
-                  install: true
-                  working-directory: apps/ui
-                  build: yarn build
-                  start: yarn preview
-                  wait-on: "http://localhost:3000"
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  coverage_path: "apps/ui/coverage/clover.xml"
+                  # threshold_warning: 70

@@ -9,7 +9,7 @@ import { createClient as createWSClient } from "graphql-ws";
 import config from "@/config";
 
 const wsClient = createWSClient({
-    url: `ws://${config.hosts.api_2}/graphql`,
+    url: `ws://${config.apiHosts.api_2}/graphql`,
 });
 
 const client = createClient({

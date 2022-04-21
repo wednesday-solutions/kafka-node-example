@@ -11,9 +11,7 @@
 
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
-
-const fs = require("fs");
-const autoRecord = require("cypress-autorecord/plugin");
+const path = require("path");
 const coverage = require("@cypress/code-coverage/task");
 const { startDevServer } = require("@cypress/vite-dev-server");
 
@@ -24,10 +22,18 @@ const { startDevServer } = require("@cypress/vite-dev-server");
 module.exports = (on, config) => {
     // `on` is used to hook into various events Cypress emits
     // `config` is the resolved Cypress config
-    on("dev-server:start", async (options) => startDevServer({ options }));
-
-    autoRecord(on, config, fs);
     coverage(on, config);
+
+    // if (config.testingType === "component") {
+    on("dev-server:start", async (options) =>
+        startDevServer({
+            options,
+            viteConfig: {
+                configFile: path.resolve(__dirname, "..", "..", "vite.config.ts"),
+            },
+        })
+    );
+    // }
 
     return config;
 };

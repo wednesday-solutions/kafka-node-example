@@ -1,7 +1,10 @@
 {
     "baseUrl": "http://localhost:3000",
+    "componentFolder": "src",
     "video": false,
-    "autorecord": {
-        "interceptPattern": "**/graphql"
+    "env": {
+        "codeCoverage": {
+            "url": "http://localhost:3000/__coverage__"
+        }
     }
 }
