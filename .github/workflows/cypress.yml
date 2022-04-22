@@ -2,6 +2,9 @@ name: Cypress Tests
 
 on:
     push:
+        branches:
+            - main
+    pull_request:
         paths:
             - "apps/ui/**"
             - ".github/workflows/cypress.yml"
@@ -27,14 +30,12 @@ jobs:
               if: failure()
               with:
                   name: cypress-screenshots
-                  path: cypress/screenshots
-
-            - name: List
-              run: ls apps/ui/*
+                  path: apps/ui/cypress/screenshots
 
             - name: Monitor coverage
+              if: ${{ github.event_name == 'pull_request' }}
               uses: slavcodev/coverage-monitor-action@v1
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
                   coverage_path: "apps/ui/coverage/clover.xml"
-                  # threshold_warning: 70
+                  comment_footer: false
