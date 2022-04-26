@@ -107,10 +107,12 @@ export class Application {
 
         this.gracefulServer.on(GracefulServer.SHUTTING_DOWN, () => {
             this.instance.log.warn("Server is shutting down");
+            this.orm.close();
         });
 
         this.gracefulServer.on(GracefulServer.SHUTDOWN, (error) => {
             this.instance.log.error("Server is down because of", error.message);
+            this.orm.close();
         });
     }
 }
