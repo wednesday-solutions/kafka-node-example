@@ -33,8 +33,7 @@ describe("Post tests", () => {
     });
 
     afterAll(async () => {
-        app.orm.close();
-        app.server.close();
+        await app.destroy();
     });
 
     describe("getPosts query", () => {
@@ -50,6 +49,7 @@ describe("Post tests", () => {
                 `,
                 })
                 .expect(200);
+
             expect(response.body.data.getPosts).toEqual(expect.toBeArray());
             expect(response.body.data.getPosts[0]).toMatchObject({
                 id: expect.toBeString(),
@@ -88,8 +88,8 @@ describe("Post tests", () => {
             await sleep(500);
             await pubSub.publish(config.graphqlChannels.NEW_POST, JSON.stringify(newPost));
             await sleep(500);
-
             subscription.unsubscribe();
+
             expect(posts.length).toBe(1);
             expect(posts[0]).toMatchObject(newPost);
         });

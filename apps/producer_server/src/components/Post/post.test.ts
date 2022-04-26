@@ -26,8 +26,7 @@ describe("Post tests", () => {
     });
 
     afterAll(async () => {
-        app.orm.close();
-        app.server.close();
+        await app.destroy();
     });
 
     describe("getPosts query", () => {

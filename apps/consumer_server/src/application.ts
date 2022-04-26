@@ -58,12 +58,18 @@ export class Application {
             await this.instance.listen(this.appPort);
             this.gracefulServer.setReady();
         } catch (error) {
-            this.orm.close();
+            await this.destroy();
             this.instance.log.error(error);
             process.exit(1);
         }
 
         return { pubsub };
+    }
+
+    public async destroy() {
+        await this.orm.close();
+        await this.kafkaConsumer.disconnect();
+        await this.instance.close();
     }
 
     private async initializeGraphql() {
