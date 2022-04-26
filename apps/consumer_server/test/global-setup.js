@@ -5,10 +5,9 @@ module.exports = async () => {
     await upAll({
         cwd: join(__dirname),
         log: true,
-        commandOptions: ["--no-recreate"],
     });
 
-    await exec("database", ["sh", "-c", "until pg_isready ; do sleep 1; done"], {
+    await exec("consumer-db", ["sh", "-c", "until pg_isready ; do sleep 1; done"], {
         cwd: join(__dirname),
     });
 };

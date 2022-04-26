@@ -7,7 +7,7 @@ module.exports = async () => {
         log: true,
     });
 
-    await exec("database", ["sh", "-c", "until pg_isready ; do sleep 1; done"], {
+    await exec("producer-db", ["sh", "-c", "until pg_isready ; do sleep 1; done"], {
         cwd: join(__dirname),
     });
 };

@@ -15,7 +15,8 @@
         "@commitlint/config-conventional": "^16.0.0",
         "husky": "^7.0.0",
         "prettier": "^2.5.1",
-        "turbo": "^1.2.2"
+        "turbo": "^1.2.2",
+        "wait-on": "^6.0.1"
     },
     "scripts": {
         "prepare": "husky install",

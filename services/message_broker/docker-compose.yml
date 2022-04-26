@@ -9,9 +9,9 @@ services:
             ZOOKEEPER_CLIENT_PORT: 2181
             ZOOKEEPER_TICK_TIME: 2000
 
-    broker:
+    kafka:
         image: confluentinc/cp-kafka:6.2.0
-        container_name: broker
+        container_name: kafka
         ports:
             # To learn about configuring Kafka for access across networks see
             # https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/
@@ -22,8 +22,26 @@ services:
             KAFKA_BROKER_ID: 1
             KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
             KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
-            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker:29092
+            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://kafka:29092
             KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
             KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
             KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
             KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+
+    init-kafka:
+        image: confluentinc/cp-kafka:6.2.0
+        depends_on:
+            - kafka
+        entrypoint: ["/bin/sh", "-c"]
+        command: |
+            "
+            # blocks until kafka is reachable
+            kafka-topics --bootstrap-server kafka:29092 --list
+
+            echo -e 'Creating kafka topics'
+            kafka-topics --bootstrap-server kafka:29092 --create --if-not-exists --topic my-topic-1 --replication-factor 1 --partitions 1
+            kafka-topics --bootstrap-server kafka:29092 --create --if-not-exists --topic new-post --replication-factor 1 --partitions 1
+
+            echo -e 'Successfully created the following topics:'
+            kafka-topics --bootstrap-server kafka:29092 --list
+            "

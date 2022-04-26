@@ -43,18 +43,22 @@ export class Application {
         this.kafkaProducer = await new KafkaProducer().init();
 
         this.server = this.instance.server;
-        this.instance.listen(this.appPort, (error) => {
-            if (error) {
-                this.orm.close();
-                this.kafkaProducer.disconnect();
-                this.instance.log.error(error);
-
-                process.exit(1);
-            }
+        try {
+            await this.instance.listen(this.appPort);
             this.gracefulServer.setReady();
-        });
+        } catch (error) {
+            await this.destroy();
+            this.instance.log.error(error);
+            process.exit(1);
+        }
 
         return this.instance;
+    }
+
+    public async destroy() {
+        await this.orm.close();
+        await this.kafkaProducer.disconnect();
+        await this.instance.close();
     }
 
     private async initializeGraphql() {
