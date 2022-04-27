@@ -10,7 +10,7 @@
         "predev": "wait-on tcp:9092 tcp:5432",
         "dev": "env-cmd -f ./.env.dev nodemon",
         "prebuild": "rm -rf dist",
-        "build": "tsc && tsc-alias",
+        "build": "tsc --project tsconfig.build.json && tsc-alias -p tsconfig.build.json",
         "lint": "eslint src/**/*.ts",
         "test": "env-cmd -f ./.env.test jest",
         "test:ci": "env-cmd -f ./.env.test jest --coverage",
