@@ -1,6 +1,41 @@
-# Turborepo Node Kafka Graphql React
+<img align="left" src="./assets/preview.svg" width="480" height="520" />
 
-Objective: Demonstrate usage of kafka
+<div>
+  <a href="https://www.wednesday.is?utm_source=gthb&utm_medium=repo&utm_campaign=serverless" align="left" style="margin-left: 0;">
+    <img src="https://uploads-ssl.webflow.com/5ee36ce1473112550f1e1739/5f5879492fafecdb3e5b0e75_wednesday_logo.svg">
+  </a>
+  <p>
+    <h1 align="left">Node Kafka </h1>
+  </p>
+
+  <p>
+A Monorepo that hosts two web server and a web client. Purpose of this project is to demonstrate usage of Kafka. We have one producer server that publishes messages to kafka and consumer server publishes that message web client after receiving the message from kafka
+  </p>
+
+---
+
+  <p>
+    <h4>
+      Expert teams of digital product strategists, developers, and designers.
+    </h4>
+  </p>
+
+  <div>
+    <a href="https://www.wednesday.is/contact-us?utm_source=gthb&utm_medium=repo&utm_campaign=serverless" target="_blank">
+      <img src="https://uploads-ssl.webflow.com/5ee36ce1473112550f1e1739/5f6ae88b9005f9ed382fb2a5_button_get_in_touch.svg" width="121" height="34">
+    </a>
+    <a href="https://github.com/wednesday-solutions/" target="_blank">
+      <img src="https://uploads-ssl.webflow.com/5ee36ce1473112550f1e1739/5f6ae88bb1958c3253756c39_button_follow_on_github.svg" width="168" height="34">
+    </a>
+  </div>
+
+---
+
+<span>We’re always looking for people who value their work, so come and join us. <a href="https://www.wednesday.is/hiring">We are hiring!</a></span>
+
+</div>
+
+<hr/>
 
 [Kafka Fundamentals](https://www.youtube.com/watch?v=Ch5VhJzaoaI)
 
@@ -18,17 +53,18 @@ Build system: [Turborepo](https://turborepo.org/)
 
 -   API
 
-    -   [KafkaJS](https://kafka.js.org/)
+    -   [KafkaJS](https://kafka.js.org/) - Kafka client for NodeJS
     -   [Kafka Graphql Subscriptions](https://github.com/tomasAlabes/graphql-kafkajs-subscriptions)
-    -   [TypeGraphql](https://typegraphql.com/)
-    -   [Fastify](fastify.io) / [Mercurius](https://mercurius.dev/)
-    -   [Mikro ORM](https://mikro-orm.io/)
+    -   [TypeGraphql](https://typegraphql.com/) - Code first Graphql
+    -   [Fastify](fastify.io) / [Mercurius](https://mercurius.dev/) - Fastest web framework for NodeJS. Mercurius is the graphql adapter of Fastify.
+    -   [Mikro ORM](https://mikro-orm.io/) - Awesome TypeScript ORM for NodeJS
     -   Postgres
     -   Kafka
 
 -   Frontend
     -   React
-    -   [Vite](https://vitejs.dev)
+    -   [Vite](https://vitejs.dev) - Next Gen Frontend build tool
+    -   [Cypress](https://www.cypress.io) - E2E & Integration testing framework
 
 ## Workspaces
 
