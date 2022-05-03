@@ -1,9 +1,6 @@
 name: CI
 
 on:
-    push:
-        branches:
-            - main
     pull_request:
 
 jobs:
@@ -38,7 +35,7 @@ jobs:
 
             - name: Lint, test and build (push)
               if: ${{ github.event_name == 'push' }}
-              run: yarn turbo run build
+              run: yarn turbo run build --since=${{ steps.extract_parent_branch.outputs.parent_branch }}
 
             - name: Lint, test and build (pull request)
               if: ${{ github.event_name == 'pull_request' }}
