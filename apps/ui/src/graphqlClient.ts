@@ -15,6 +15,14 @@ const wsClient = createWSClient({
 const client = createClient({
     url: `${config.env.API_BASE_URL2}/graphql`,
     suspense: true,
+    fetchOptions: () => {
+        return {
+            headers: {
+                "dapr-app-id": "consumer_server",
+                accept: "application/json",
+            },
+        };
+    },
     exchanges: [
         dedupExchange,
         cacheExchange,

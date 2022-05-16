@@ -15,6 +15,8 @@ import { getContext } from "@/utils/interfaces/context.interface";
 import config from "@/config";
 import { DBService } from "@/services/DBService";
 import { KafkaProducer } from "@/services/MQService";
+import daprClient from "@/services/DaprClient";
+import { sleep } from "@/utils/helpers";
 
 export class Application {
     public instance: FastifyInstance;
@@ -50,6 +52,24 @@ export class Application {
             await this.destroy();
             this.instance.log.error(error);
             process.exit(1);
+        }
+
+        for (let i = 1; i <= 10; i++) {
+            const order = { orderId: i };
+            const PUBSUB_NAME = "kafka-pubsub";
+            const PUBSUB_TOPIC = "orders";
+            // Publish an event using Dapr pub/sub
+            const published = await daprClient.client.pubsub.publish(
+                PUBSUB_NAME,
+                PUBSUB_TOPIC,
+                order
+            );
+
+            if (published) {
+                console.log("Published data: " + JSON.stringify(order));
+            }
+
+            await sleep(1000);
         }
 
         return this.instance;

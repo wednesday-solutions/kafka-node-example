@@ -4,6 +4,7 @@ import PostValidator from "@/components/Post/post.validator";
 import { Post } from "@/components/Post/post.entity";
 import { MyContext } from "@/utils/interfaces/context.interface";
 import config from "@/config";
+import daprClent from "@/services/DaprClient";
 
 @Resolver(() => Post)
 export class PostResolver {
@@ -44,6 +45,7 @@ export class PostResolver {
                 messages: [{ key: "big", value: JSON.stringify(post) }],
             });
         }
+        await daprClent.publishNewPost(post);
 
         return post;
     }

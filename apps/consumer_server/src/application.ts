@@ -14,20 +14,21 @@ import { Consumer } from "kafkajs";
 // import { RedisPubSub } from "graphql-redis-subscriptions";
 import { KafkaPubSub } from "graphql-kafkajs-subscriptions";
 
-import { getContext } from "@/utils/interfaces/context.interface";
+import { getContext, DaprRequestInterface } from "@/utils/interfaces";
 import config from "@/config";
 import connectDatabase from "@/connectDatabase";
 import { connectKafkaConsumer } from "@/connectKafka";
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 export const DI = {} as { em: EntityManager };
+
 export class Application {
     public instance: FastifyInstance;
     public orm!: MikroORM<IDatabaseDriver<Connection>>;
     public server!: Server;
     public gracefulServer: any;
     public appDomain: string = config.api.domain;
-    public appPort: number;
+    public appPort: number = config.api.port;
     public kafkaConsumer!: Consumer;
     public kafkaPubSub!: KafkaPubSub;
 
@@ -45,6 +46,17 @@ export class Application {
 
     public async init() {
         this.instance.register(fastifyCors);
+        this.instance.addContentTypeParser(
+            "application/cloudevents+json",
+            { parseAs: "string" },
+            (req, body, done) => {
+                if (typeof body === "string") {
+                    done(null, JSON.parse(body));
+                } else {
+                    done(null, body);
+                }
+            }
+        );
         this.orm = await connectDatabase();
         DI.em = this.orm.em.fork();
 
@@ -103,6 +115,27 @@ export class Application {
     private routes() {
         this.instance.get("/", async (_request, _reply) => {
             return { message: "God speed" };
+        });
+
+        this.instance.get("/dapr/subscribe", async (request, _reply) => {
+            return [
+                { pubsubname: "kafka-pubsub", topic: "orders", route: "checkout" },
+                {
+                    pubsubname: "kafka-pubsub",
+                    topic: "newPost",
+                    route: "new-post",
+                },
+            ];
+        });
+
+        this.instance.post<DaprRequestInterface>("/checkout", async (request, _reply) => {
+            console.log("CHECKOUT:", request.body.data);
+            return {};
+        });
+
+        this.instance.post<DaprRequestInterface>("/new-post", async (request, _reply) => {
+            console.log("NEWPOST:", request.body.data);
+            return {};
         });
     }
 
