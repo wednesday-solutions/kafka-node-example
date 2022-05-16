@@ -2,9 +2,18 @@ import { Connection, EntityManager, IDatabaseDriver } from "@mikro-orm/core";
 import supertest, { SuperTest, Test } from "supertest";
 import faker from "@faker-js/faker";
 import Application from "@/application";
-import createSimpleUuid from "@/utils/helpers/createSimpleUuid";
 import { clearDatabase } from "@/utils/helpers/clearDatabase";
 import { loadFixtures } from "@/utils/helpers/loadFixture";
+
+jest.mock("dapr-client");
+// jest.mock("dapr-client", () => ({
+//     DaprClient: jest.fn(() => ({
+//         pubsub: jest.fn(() => ({
+//             // eslint-disable-next-line max-nested-callbacks
+//             publish: jest.fn(() => Promise.resolve()),
+//         })),
+//     })),
+// }));
 
 let request: SuperTest<Test>;
 let app: Application;

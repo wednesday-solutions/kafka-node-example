@@ -15,7 +15,7 @@ import { getContext } from "@/utils/interfaces/context.interface";
 import config from "@/config";
 import { DBService } from "@/services/DBService";
 import { KafkaProducer } from "@/services/MQService";
-import daprClient from "@/services/DaprClient";
+import { daprClient } from "@/services/DaprClient";
 import { sleep } from "@/utils/helpers";
 
 export class Application {

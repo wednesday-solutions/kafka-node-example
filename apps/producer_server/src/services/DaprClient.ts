@@ -1,6 +1,6 @@
 import { DaprClient } from "dapr-client";
 
-class Dapr {
+export class Dapr {
     public client: DaprClient;
     public constructor() {
         const DAPR_HOST = process.env.DAPR_HOST || "http://localhost";
@@ -17,4 +17,4 @@ class Dapr {
     }
 }
 
-export default new Dapr();
+export const daprClient = new Dapr();
