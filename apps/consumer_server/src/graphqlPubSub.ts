@@ -13,12 +13,10 @@ const dateReviver = (key, value) => {
     return value;
 };
 
-export const myRedisClient = new Redis("redis://:redisPassword@127.0.0.1:6379/1");
-
 export const pubSub = new RedisPubSub({
     reviver: dateReviver,
-    publisher: myRedisClient,
-    subscriber: myRedisClient,
+    publisher: new Redis(config.env.REDIS_URI),
+    subscriber: new Redis(config.env.REDIS_URI),
 });
 
 export default pubSub;

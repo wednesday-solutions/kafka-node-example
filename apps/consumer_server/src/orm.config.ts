@@ -1,7 +1,9 @@
 import { Options } from "@mikro-orm/core";
 import { RedisCacheAdapter } from "mikro-orm-cache-adapter-redis";
+import Redis from "ioredis";
 import config from "@/config";
-import { myRedisClient } from "@/graphqlPubSub";
+
+export const myRedisClient = new Redis(config.env.REDIS_URI);
 
 export const ormConfig: Options = {
     entities: ["dist/**/*.entity.js"],

@@ -2,7 +2,6 @@ import { Arg, Ctx, Info, Root, Query, Resolver, Subscription } from "type-graphq
 import { GraphQLResolveInfo } from "graphql";
 import { Post } from "@/components/Post/post.entity";
 import { MyContext } from "@/utils/interfaces/context.interface";
-import { KafkaMessage } from "kafkajs";
 import config from "@/config";
 
 @Resolver(() => Post)
@@ -31,24 +30,15 @@ export class PostResolver {
     @Subscription(() => Post, {
         topics: config.graphqlChannels.NEW_POST,
     })
-    public newPosts(@Root() newPost: Post): Post {
-        console.log(newPost);
-        // const post = JSON.parse(newPost) as Post;
+    public newPosts(@Root() newPost: NewPostPayload): NewPostPayload {
         return newPost;
-        // return {
-        //     id: post.id,
-        //     userName: post.userName,
-        //     title: post.title,
-        //     createdAt: new Date(post.createdAt),
-        //     updatedAt: post.updatedAt ? new Date(post.updatedAt) : null,
-        // };
     }
 }
 
 export interface NewPostPayload {
     id: string;
     userName: string;
-    createdAt: Date; // limitation of Redis/Kafka payload serialization
+    createdAt: Date;
     updatedAt?: Date;
     title: string;
 }
