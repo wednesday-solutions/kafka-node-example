@@ -13,7 +13,7 @@
         "prebuild": "rm -rf dist",
         "build": "tsc --project tsconfig.build.json && tsc-alias -p tsconfig.build.json",
         "lint": "eslint src/**/*.ts",
-        "test": "env-cmd -f ./.env.test jest",
+        "test": "env-cmd -f ./.env.test jest --detectOpenHandles",
         "test:ci": "env-cmd -f ./.env.test jest --coverage",
         "gen-migrations": "env-cmd -f ./.env.dev mikro-orm migration:create",
         "compose:up": "docker-compose --env-file ./.env.dev up -d",

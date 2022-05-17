@@ -86,7 +86,7 @@ describe("Post tests", () => {
                 posts.push(event.data.newPosts);
             });
             await sleep(500);
-            await pubSub.publish(config.graphqlChannels.NEW_POST, JSON.stringify(newPost));
+            await pubSub.publish(config.graphqlChannels.NEW_POST, newPost);
             await sleep(500);
             subscription.unsubscribe();
 
