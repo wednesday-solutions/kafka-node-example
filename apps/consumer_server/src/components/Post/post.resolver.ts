@@ -13,7 +13,10 @@ export class PostResolver {
         @Ctx() ctx: MyContext,
         @Info() info: GraphQLResolveInfo
     ): Promise<Post[]> {
-        return ctx.em.getRepository(Post).findAll({ orderBy: { [sortBy]: "desc" } });
+        return ctx.em.getRepository(Post).findAll({
+            orderBy: { [sortBy]: "desc" },
+            cache: true,
+        });
     }
 
     @Query(() => Post, { nullable: true })
@@ -22,22 +25,23 @@ export class PostResolver {
         @Ctx() ctx: MyContext,
         @Info() info: GraphQLResolveInfo
     ): Promise<Post | null> {
-        return ctx.em.getRepository(Post).findOne({ id });
+        return ctx.em.getRepository(Post).findOne({ id }, { cache: true });
     }
 
     @Subscription(() => Post, {
         topics: config.graphqlChannels.NEW_POST,
     })
-    public newPosts(@Root() newPost: KafkaMessage): NewPostPayload {
-        const post = JSON.parse(newPost.value.toString()) as Post;
-
-        return {
-            id: post.id,
-            userName: post.userName,
-            title: post.title,
-            createdAt: new Date(post.createdAt),
-            updatedAt: post.updatedAt ? new Date(post.updatedAt) : null,
-        };
+    public newPosts(@Root() newPost: Post): Post {
+        console.log(newPost);
+        // const post = JSON.parse(newPost) as Post;
+        return newPost;
+        // return {
+        //     id: post.id,
+        //     userName: post.userName,
+        //     title: post.title,
+        //     createdAt: new Date(post.createdAt),
+        //     updatedAt: post.updatedAt ? new Date(post.updatedAt) : null,
+        // };
     }
 }
 

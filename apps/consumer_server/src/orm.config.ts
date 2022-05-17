@@ -1,5 +1,7 @@
 import { Options } from "@mikro-orm/core";
+import { RedisCacheAdapter } from "mikro-orm-cache-adapter-redis";
 import config from "@/config";
+import { myRedisClient } from "@/graphqlPubSub";
 
 export const ormConfig: Options = {
     entities: ["dist/**/*.entity.js"],
@@ -16,6 +18,13 @@ export const ormConfig: Options = {
         tableName: "migrations",
         transactional: true,
         disableForeignKeys: false,
+    },
+    resultCache: {
+        adapter: RedisCacheAdapter,
+        expiration: 60 * 1000,
+        options: {
+            client: myRedisClient,
+        },
     },
 };
 

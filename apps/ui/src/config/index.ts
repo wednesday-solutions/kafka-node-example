@@ -1,11 +1,11 @@
 export default {
     env: {
-        API_BASE_URL1: "http://localhost:3500",
-        API_BASE_URL2: "http://localhost:3501",
+        API_BASE_URL1: "http://localhost:7000",
+        API_BASE_URL2: "http://localhost:7001",
     },
     apiHosts: {
-        api_1: "localhost:3500",
-        api_2: "localhost:3501",
+        api_1: "localhost:7000",
+        api_2: "localhost:7001",
     },
     graphqlChannels: {
         NEW_POST: "NEW_POST",

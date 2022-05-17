@@ -1,9 +1,20 @@
 import { RequestGenericInterface } from "fastify";
 
-export interface DaprRequestInterface extends RequestGenericInterface {
+export * from "./context.interface";
+
+export interface DaprRequestBody extends RequestGenericInterface {
     Body: {
         data: Object;
     };
 }
 
-export * from "./context.interface";
+export interface NewPostRequestBody extends RequestGenericInterface {
+    Body: {
+        data: {
+            id: string;
+            createdAt: string;
+            title: string;
+            userName: string;
+        };
+    };
+}

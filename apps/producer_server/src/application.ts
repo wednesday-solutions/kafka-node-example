@@ -54,23 +54,23 @@ export class Application {
             process.exit(1);
         }
 
-        for (let i = 1; i <= 10; i++) {
-            const order = { orderId: i };
-            const PUBSUB_NAME = "kafka-pubsub";
-            const PUBSUB_TOPIC = "orders";
-            // Publish an event using Dapr pub/sub
-            const published = await daprClient.client.pubsub.publish(
-                PUBSUB_NAME,
-                PUBSUB_TOPIC,
-                order
-            );
+        // for (let i = 1; i <= 10; i++) {
+        //     const order = { orderId: i };
+        //     const PUBSUB_NAME = "kafka-pubsub";
+        //     const PUBSUB_TOPIC = "orders";
+        //     // Publish an event using Dapr pub/sub
+        //     const published = await daprClient.client.pubsub.publish(
+        //         PUBSUB_NAME,
+        //         PUBSUB_TOPIC,
+        //         order
+        //     );
 
-            if (published) {
-                console.log("Published data: " + JSON.stringify(order));
-            }
+        //     if (published) {
+        //         console.log("Published data: " + JSON.stringify(order));
+        //     }
 
-            await sleep(1000);
-        }
+        //     await sleep(1000);
+        // }
 
         return this.instance;
     }

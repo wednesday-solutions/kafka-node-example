@@ -6,7 +6,7 @@ import type { Consumer } from "kafkajs";
 export interface ExtraContext {
     request: FastifyRequest;
     em: EntityManager;
-    kafkaConsumer: Consumer;
+    kafkaConsumer?: Consumer;
 }
 
 export interface MyContext extends MercuriusContext, ExtraContext {}
@@ -14,7 +14,7 @@ export interface MyContext extends MercuriusContext, ExtraContext {}
 export const getContext = (
     request: FastifyRequest,
     em: EntityManager,
-    kafkaConsumer: Consumer
+    kafkaConsumer?: Consumer
 ): ExtraContext => {
     return { request, em, kafkaConsumer };
 };
