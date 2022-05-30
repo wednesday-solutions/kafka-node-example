@@ -84,6 +84,7 @@ export class Application {
         await this.orm.close();
         // await this.kafkaConsumer.disconnect();
         await this.fastify.close();
+        await pubSub.close();
     }
 
     private async initializeGraphql() {

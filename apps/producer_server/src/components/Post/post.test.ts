@@ -5,15 +5,13 @@ import Application from "@/application";
 import { clearDatabase } from "@/utils/helpers/clearDatabase";
 import { loadFixtures } from "@/utils/helpers/loadFixture";
 
-jest.mock("dapr-client");
-// jest.mock("dapr-client", () => ({
-//     DaprClient: jest.fn(() => ({
-//         pubsub: jest.fn(() => ({
-//             // eslint-disable-next-line max-nested-callbacks
-//             publish: jest.fn(() => Promise.resolve()),
-//         })),
-//     })),
-// }));
+jest.mock("dapr-client", () => ({
+    DaprClient: jest.fn(() => ({
+        pubsub: jest.fn().mockImplementation(() => ({
+            publish: jest.fn(),
+        })),
+    })),
+}));
 
 let request: SuperTest<Test>;
 let app: Application;

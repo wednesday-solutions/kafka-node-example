@@ -45,6 +45,7 @@ export class PostResolver {
         //         messages: [{ key: "big", value: JSON.stringify(post) }],
         //     });
         // }
+
         await daprClient.publishNewPost(post);
 
         return post;
