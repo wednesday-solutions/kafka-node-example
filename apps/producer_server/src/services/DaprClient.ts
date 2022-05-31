@@ -12,6 +12,7 @@ export class Dapr {
     public async publishNewPost(post) {
         const PUBSUB_NAME = "kafka-pubsub";
         const PUBSUB_TOPIC = "newPost";
+
         await this.client.pubsub.publish(PUBSUB_NAME, PUBSUB_TOPIC, post);
         console.log("Published data: " + JSON.stringify(post));
     }

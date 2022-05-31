@@ -7,6 +7,7 @@ module.exports = {
         ".eslintrc.js",
         "**/global-*.js",
         "**/*-hook.js",
+        "**/jest.*.js",
         "__mocks__",
     ],
     env: {

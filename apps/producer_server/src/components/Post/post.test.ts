@@ -7,9 +7,9 @@ import { loadFixtures } from "@/utils/helpers/loadFixture";
 
 jest.mock("dapr-client", () => ({
     DaprClient: jest.fn(() => ({
-        pubsub: jest.fn().mockImplementation(() => ({
-            publish: jest.fn(),
-        })),
+        pubsub: {
+            publish: jest.fn(() => ({})),
+        },
     })),
 }));
 
