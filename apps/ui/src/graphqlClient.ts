@@ -18,7 +18,6 @@ const client = createClient({
     fetchOptions: () => {
         return {
             headers: {
-                "dapr-app-id": "consumer_server",
                 accept: "application/json",
             },
         };

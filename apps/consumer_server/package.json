@@ -9,7 +9,7 @@
     "scripts": {
         "predev": "wait-on tcp:9092 tcp:5432",
         "dev": "env-cmd -f ./.env.dev nodemon",
-        "dapr:run": "dapr run --app-id consumer_server --app-protocol http --app-port 7001 --dapr-http-port 3501 --components-path ../../dapr_components -- yarn dev",
+        "dapr:run": "dapr run --app-id consumer_server --app-protocol http --app-port 7001 --dapr-http-port 3501 --components-path ../../dapr_components",
         "prebuild": "rm -rf dist",
         "build": "tsc --project tsconfig.build.json && tsc-alias -p tsconfig.build.json",
         "lint": "eslint src/**/*.ts",

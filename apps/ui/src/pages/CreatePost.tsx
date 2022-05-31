@@ -9,9 +9,7 @@ const client = createClient({
     suspense: true,
     fetchOptions: () => {
         return {
-            headers: {
-                "dapr-app-id": "producer_server",
-            },
+            headers: {},
         };
     },
 });
