@@ -81,9 +81,12 @@ export class Application {
     }
 
     public async destroy() {
-        await this.orm.close();
         // await this.kafkaConsumer.disconnect();
         await this.fastify.close();
+        if (this.orm.isConnected) {
+            await this.orm.close();
+        }
+
         await pubSub.close();
     }
 

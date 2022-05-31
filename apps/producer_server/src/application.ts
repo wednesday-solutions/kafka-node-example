@@ -14,9 +14,7 @@ import { Producer } from "kafkajs";
 import { getContext } from "@/utils/interfaces/context.interface";
 import config from "@/config";
 import { DBService } from "@/services/DBService";
-import { KafkaProducer } from "@/services/MQService";
-import { daprClient } from "@/services/DaprClient";
-import { sleep } from "@/utils/helpers";
+// import { KafkaProducer } from "@/services/MQService";
 
 export class Application {
     public instance: FastifyInstance;
@@ -42,7 +40,7 @@ export class Application {
         this.instance.register(fastifyCors);
         await this.initializeGraphql();
         this.orm = await new DBService().init();
-        this.kafkaProducer = await new KafkaProducer().init();
+        // this.kafkaProducer = await new KafkaProducer().init();
 
         this.server = this.instance.server;
         try {
@@ -54,31 +52,15 @@ export class Application {
             process.exit(1);
         }
 
-        // for (let i = 1; i <= 10; i++) {
-        //     const order = { orderId: i };
-        //     const PUBSUB_NAME = "kafka-pubsub";
-        //     const PUBSUB_TOPIC = "orders";
-        //     // Publish an event using Dapr pub/sub
-        //     const published = await daprClient.client.pubsub.publish(
-        //         PUBSUB_NAME,
-        //         PUBSUB_TOPIC,
-        //         order
-        //     );
-
-        //     if (published) {
-        //         console.log("Published data: " + JSON.stringify(order));
-        //     }
-
-        //     await sleep(1000);
-        // }
-
         return this.instance;
     }
 
     public async destroy() {
-        await this.orm.close();
-        await this.kafkaProducer.disconnect();
+        // await this.kafkaProducer.disconnect();
         await this.instance.close();
+        if (this.orm.isConnected) {
+            await this.orm.close();
+        }
     }
 
     private async initializeGraphql() {
@@ -113,15 +95,15 @@ export class Application {
         });
 
         this.gracefulServer.on(GracefulServer.SHUTTING_DOWN, () => {
-            this.orm.close();
-            this.kafkaProducer.disconnect();
             this.instance.log.warn("Server is shutting down");
+            this.orm.close();
+            // this.kafkaProducer.disconnect();
         });
 
         this.gracefulServer.on(GracefulServer.SHUTDOWN, (error) => {
-            this.orm.close();
-            this.kafkaProducer.disconnect();
             this.instance.log.error("Server is down because of", error.message);
+            this.orm.close();
+            // this.kafkaProducer.disconnect();
         });
     }
 }
