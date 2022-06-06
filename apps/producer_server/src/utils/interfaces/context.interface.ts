@@ -5,7 +5,7 @@ import type { Producer } from "kafkajs";
 export interface ExtraContext {
     request: FastifyRequest;
     em: EntityManager;
-    kafkaProducer: Producer;
+    kafkaProducer?: Producer;
 }
 
 export interface MyContext extends MercuriusContext, ExtraContext {}
@@ -13,7 +13,7 @@ export interface MyContext extends MercuriusContext, ExtraContext {}
 export const getContext = (
     request: FastifyRequest,
     em: EntityManager,
-    kafkaProducer: Producer
+    kafkaProducer?: Producer
 ): ExtraContext => {
     return { request, em, kafkaProducer };
 };

@@ -3,7 +3,7 @@ import { Connection, EntityManager, IDatabaseDriver } from "@mikro-orm/core";
 import supertest, { SuperTest, Test } from "supertest";
 import faker from "@faker-js/faker";
 import Application from "@/application";
-import { KafkaPubSub } from "graphql-kafkajs-subscriptions";
+import { RedisPubSub } from "graphql-redis-subscriptions";
 import gql from "graphql-tag";
 import { clearDatabase, loadFixtures, sleep } from "@/utils/helpers";
 import { createSubscriptionObservable } from "@/utils/helpers/graphqlWSClient";
@@ -14,13 +14,13 @@ const port = faker.internet.port();
 let request: SuperTest<Test>;
 let app: Application;
 let em: EntityManager<IDatabaseDriver<Connection>>;
-let pubSub: KafkaPubSub;
+let pubSub: RedisPubSub;
 
 describe("Post tests", () => {
     let client;
     beforeAll(async () => {
         app = new Application(port);
-        const { pubsub } = await app.init();
+        const { pubSub: pubsub } = await app.init();
         pubSub = pubsub;
         em = app.orm.em.fork();
 
@@ -86,7 +86,7 @@ describe("Post tests", () => {
                 posts.push(event.data.newPosts);
             });
             await sleep(500);
-            await pubSub.publish(config.graphqlChannels.NEW_POST, JSON.stringify(newPost));
+            await pubSub.publish(config.graphqlChannels.NEW_POST, newPost);
             await sleep(500);
             subscription.unsubscribe();
 

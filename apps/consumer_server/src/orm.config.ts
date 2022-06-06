@@ -1,5 +1,9 @@
 import { Options } from "@mikro-orm/core";
+import { RedisCacheAdapter } from "mikro-orm-cache-adapter-redis";
+import Redis from "ioredis";
 import config from "@/config";
+
+export const myRedisClient = new Redis(config.env.REDIS_URI);
 
 export const ormConfig: Options = {
     entities: ["dist/**/*.entity.js"],
@@ -16,6 +20,13 @@ export const ormConfig: Options = {
         tableName: "migrations",
         transactional: true,
         disableForeignKeys: false,
+    },
+    resultCache: {
+        adapter: RedisCacheAdapter,
+        expiration: 60 * 1000,
+        options: {
+            client: myRedisClient,
+        },
     },
 };
 

@@ -9,6 +9,7 @@
     "scripts": {
         "predev": "wait-on tcp:9092 tcp:5432",
         "dev": "export NODE_ENV=development && nodemon",
+        "dapr:run": "dapr run --app-id producer_server --app-protocol http --app-port 7000 --dapr-http-port 3500 --components-path ../../dapr_components",
         "prebuild": "rm -rf dist && export NODE_ENV=production",
         "build": "tsc --project tsconfig.build.json && tsc-alias -p tsconfig.build.json",
         "lint": "eslint src/**/*.ts",
@@ -28,6 +29,7 @@
         "@mikro-orm/migrations": "^5.0.5",
         "@mikro-orm/postgresql": "^5.0.5",
         "class-validator": "^0.13.2",
+        "dapr-client": "^2.1.0",
         "env-cmd": "^10.1.0",
         "envalid": "^7.2.2",
         "envars": "^0.4.0",
@@ -56,6 +58,7 @@
         "is-ci": "^3.0.1",
         "jest": "^27.5.1",
         "jest-extended": "^2.0.0",
+        "msw": "^0.41.0",
         "pino-pretty": "^7.3.0",
         "supertest": "^6.1.6",
         "ts-eager": "^2.0.2",

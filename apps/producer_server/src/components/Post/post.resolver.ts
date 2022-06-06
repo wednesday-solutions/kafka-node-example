@@ -3,7 +3,8 @@ import { GraphQLResolveInfo } from "graphql";
 import PostValidator from "@/components/Post/post.validator";
 import { Post } from "@/components/Post/post.entity";
 import { MyContext } from "@/utils/interfaces/context.interface";
-import config from "@/config";
+// import config from "@/config";
+import { daprClient } from "@/services/DaprClient";
 
 @Resolver(() => Post)
 export class PostResolver {
@@ -33,17 +34,19 @@ export class PostResolver {
         const post = new Post(input);
 
         await ctx.em.persist(post).flush();
-        if (post.title.length < 25) {
-            ctx.kafkaProducer.send({
-                topic: config.kafka.topic,
-                messages: [{ key: "small", value: JSON.stringify(post) }],
-            });
-        } else {
-            ctx.kafkaProducer.send({
-                topic: config.kafka.topic,
-                messages: [{ key: "big", value: JSON.stringify(post) }],
-            });
-        }
+        // if (post.title.length < 25) {
+        //     ctx.kafkaProducer.send({
+        //         topic: config.kafka.topic,
+        //         messages: [{ key: "small", value: JSON.stringify(post) }],
+        //     });
+        // } else {
+        //     ctx.kafkaProducer.send({
+        //         topic: config.kafka.topic,
+        //         messages: [{ key: "big", value: JSON.stringify(post) }],
+        //     });
+        // }
+
+        await daprClient.publishNewPost(post);
 
         return post;
     }

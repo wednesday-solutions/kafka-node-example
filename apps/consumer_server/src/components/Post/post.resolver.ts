@@ -2,7 +2,6 @@ import { Arg, Ctx, Info, Root, Query, Resolver, Subscription } from "type-graphq
 import { GraphQLResolveInfo } from "graphql";
 import { Post } from "@/components/Post/post.entity";
 import { MyContext } from "@/utils/interfaces/context.interface";
-import { KafkaMessage } from "kafkajs";
 import config from "@/config";
 
 @Resolver(() => Post)
@@ -13,7 +12,10 @@ export class PostResolver {
         @Ctx() ctx: MyContext,
         @Info() info: GraphQLResolveInfo
     ): Promise<Post[]> {
-        return ctx.em.getRepository(Post).findAll({ orderBy: { [sortBy]: "desc" } });
+        return ctx.em.getRepository(Post).findAll({
+            orderBy: { [sortBy]: "desc" },
+            cache: true,
+        });
     }
 
     @Query(() => Post, { nullable: true })
@@ -22,29 +24,21 @@ export class PostResolver {
         @Ctx() ctx: MyContext,
         @Info() info: GraphQLResolveInfo
     ): Promise<Post | null> {
-        return ctx.em.getRepository(Post).findOne({ id });
+        return ctx.em.getRepository(Post).findOne({ id }, { cache: true });
     }
 
     @Subscription(() => Post, {
         topics: config.graphqlChannels.NEW_POST,
     })
-    public newPosts(@Root() newPost: KafkaMessage): NewPostPayload {
-        const post = JSON.parse(newPost.value.toString()) as Post;
-
-        return {
-            id: post.id,
-            userName: post.userName,
-            title: post.title,
-            createdAt: new Date(post.createdAt),
-            updatedAt: post.updatedAt ? new Date(post.updatedAt) : null,
-        };
+    public newPosts(@Root() newPost: NewPostPayload): NewPostPayload {
+        return newPost;
     }
 }
 
 export interface NewPostPayload {
     id: string;
     userName: string;
-    createdAt: Date; // limitation of Redis/Kafka payload serialization
+    createdAt: Date;
     updatedAt?: Date;
     title: string;
 }

@@ -9,7 +9,7 @@
   </p>
 
   <p>
-A Monorepo that hosts two web server and a web client. Purpose of this project is to demonstrate usage of Kafka. We have one producer server that publishes messages to kafka and consumer server publishes that message web client after receiving the message from kafka
+A Monorepo that hosts two web server and a web client. Purpose of this project is to demonstrate usage of Kafka and Dapr. We have one producer server that publishes messages to kafka and consumer server publishes that message web client after receiving the message from kafka
   </p>
 
 ---
@@ -50,6 +50,7 @@ Build system: [Turborepo](https://turborepo.org/)
     -   Node.js 16
     -   yarn
     -   docker-compose
+    -   [Dapr](https://dapr.io/) - Used to simplify microservice connectivity
 
 -   API
 
@@ -98,10 +99,14 @@ packages
 
 -   Install dependencies using `yarn install`
 -   Start the stack using `yarn dev`
+-   Start dapr `yarn dapr:run` (please make sure Kafka is running before running dapr)
 -   Browse [http://localhost:3000](http://localhost:3000)
 
-![Screenshot](assets/terminal.png)
 `yarn dev` output
+![Screenshot](assets/terminal.png)
 
-![Screenshot](assets/node-kafka-fe.gif)
 `http://localhost:3000` output
+![Screenshot](assets/node-kafka-fe.gif)
+
+`http://localhost:9411` output
+![Tracing](assets/tracing.png)

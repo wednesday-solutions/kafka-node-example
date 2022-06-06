@@ -7,6 +7,11 @@ import CreatePostForm from "components/CreatePostForm";
 const client = createClient({
     url: `${config.env.API_BASE_URL1}/graphql`,
     suspense: true,
+    fetchOptions: () => {
+        return {
+            headers: {},
+        };
+    },
 });
 
 export default function CreatePosts() {

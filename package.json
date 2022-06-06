@@ -21,6 +21,7 @@
     "scripts": {
         "prepare": "husky install",
         "dev": "turbo run dev --parallel",
+        "dapr:run": "turbo run dapr:run --parallel",
         "lint": "turbo run lint --parallel",
         "test": "turbo run test",
         "test:ci": "turbo run test:ci",

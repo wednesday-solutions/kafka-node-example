@@ -1,7 +1,7 @@
 import { MikroORM, EntityManager } from "@mikro-orm/core";
 import faker from "@faker-js/faker";
 import { Post } from "@/components/Post/post.entity";
-import createSimpleUuid from "@/utils/helpers/createSimpleUuid";
+import { createSimpleUuid } from "./index";
 
 export const clearDatabase = async (orm: MikroORM): Promise<void> => {
     await orm.getSchemaGenerator().dropSchema({ wrap: true });
