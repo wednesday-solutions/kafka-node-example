@@ -40,7 +40,7 @@
         "graphql": "15",
         "hyperid": "^3.0.0",
         "kafkajs": "^1.15.0",
-        "mercurius": "^8.9.1",
+        "mercurius": "^11.5.0",
         "mercurius-upload": "^2.0.0",
         "reflect-metadata": "^0.1.13",
         "tsconfig-paths": "^3.12.0",
