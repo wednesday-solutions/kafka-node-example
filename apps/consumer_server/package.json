@@ -39,7 +39,7 @@
         "hyperid": "^3.0.0",
         "ioredis": "^4.28.3",
         "kafkajs": "^1.15.0",
-        "mercurius": "^8.9.1",
+        "mercurius": "^11.5.0",
         "mercurius-upload": "^2.0.0",
         "mikro-orm-cache-adapter-redis": "^3.2.0",
         "reflect-metadata": "^0.1.13",
